@@ -198,9 +198,39 @@
             </div>
 
             <!-- Mobile Button -->
-            <button class="md:hidden text-classic-black text-lg">
+            <button onclick="toggleMenu()" class="md:hidden text-classic-black text-lg">
                 <i class="fa-solid fa-bars"></i>
+                <!-- <i class="fa-solid fa-xmark"></i> -->
             </button>
+    
+            <!-- Menu (mobile) -->
+            <div id="mobileMenu" class="hidden max-sm:hidden absolute top-[80px] left-[0] bg-[#fffffff5] w-full h-48 flex-col items-center justify-evenly border-t-[1px] border-[#e5e7eb] font-sans text-sm font-medium text-gray-500 tracking-wide">
+                <a href="index.html" class="hover:text-black transition-colors">Home</a>
+                <a href="demo.html" class="hover:text-black transition-colors">Demo & Templates</a>
+                <!-- <a href="plans.html" class="hover:text-black transition-colors">Plans</a> -->
+                <a href="aboutus.html" class="hover:text-black transition-colors">About us</a>
+            </div>
+
+            <script>
+                function toggleMenu() {
+                    const menuIcon = document.querySelector('nav button i');
+                    const mobileMenu = document.querySelector('#mobileMenu');
+
+                    if ( menuIcon.classList.contains('fa-bars')) {
+                        mobileMenu.classList.remove('max-sm:hidden');
+                        mobileMenu.classList.add('max-sm:flex');
+                        menuIcon.classList.remove('fa-bars');
+                        menuIcon.classList.add('fa-xmark');
+                    } else {
+                        mobileMenu.classList.remove('max-sm:flex');
+                        mobileMenu.classList.add('max-sm:hidden');
+                        menuIcon.classList.remove('fa-xmark');
+                        menuIcon.classList.add('fa-bars');
+                    }
+                }
+            </script>
+            
+
         </div>
     </nav>
 
