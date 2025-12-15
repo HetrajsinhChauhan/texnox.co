@@ -3,15 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Texnox | Digital Consultancy</title>
-    <meta name="description" content="Texnox: Creating timeless digital experiences.">
-
-    <!-- Mobile App Capabilities -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How We Work | Texnox</title>
+    <meta name="description" content="Texnox: Our process for creating timeless digital experiences.">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -52,9 +46,6 @@
                             '0%': { opacity: '0', transform: 'translateY(10px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         }
-                    },
-                    screens: {
-                        'xs': '375px', // Added for smaller phones
                     }
                 }
             }
@@ -62,40 +53,11 @@
     </script>
 
     <style>
-        /* --- APP-LIKE RESETS --- */
-        html {
-            -webkit-tap-highlight-color: transparent;
-            scroll-padding-top: 80px;
-            /* Offset for sticky header */
-        }
-
         body {
             background-color: #ffffff;
             color: #1a1a1a;
             overflow-x: hidden;
             position: relative;
-            /* Extra padding bottom for mobile nav bar */
-            padding-bottom: 80px;
-        }
-
-        @media (min-width: 768px) {
-            body {
-                padding-bottom: 0;
-            }
-        }
-
-        /* Hide Scrollbar for cleaner app look */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #d4d4d8;
-            border-radius: 3px;
         }
 
         /* --- BUTTON STYLES --- */
@@ -131,6 +93,16 @@
         .service-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* --- IMAGE REVEAL --- */
+        .img-reveal {
+            clip-path: inset(0 100% 0 0);
+            transition: clip-path 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .img-reveal.active {
+            clip-path: inset(0 0 0 0);
         }
 
         /* --- ANIMATED SHAPES --- */
@@ -173,19 +145,9 @@
             }
         }
 
-        /* --- MOBILE BOTTOM NAV --- */
-        .mobile-bottom-nav {
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
-            padding-bottom: env(safe-area-inset-bottom);
-            /* iPhone Home Bar fix */
-        }
-
-        .nav-item.active {
-            color: #1a1a1a;
-        }
-
-        .nav-item.active i {
-            transform: translateY(-2px);
+        /* --- MOBILE MENU --- */
+        .mobile-menu.open {
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -204,17 +166,14 @@
             <p class="font-sans text-xs text-gray-400 mt-4 tracking-[0.3em] uppercase">Loading Library</p>
         </div>
     </div>
-
     <!-- BACKGROUND SHAPES CONTAINER -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none">
-        <div class="classic-shape shape-circle w-64 h-64 md:w-96 md:h-96 top-[-5%] left-[-5%] shape-anim"></div>
-        <div class="classic-shape shape-square w-48 h-48 md:w-64 md:h-64 top-[20%] right-[-2%] shape-anim delay-100">
+        <div class="classic-shape shape-circle w-96 h-96 top-[-5%] left-[-5%] shape-anim"></div>
+        <div class="classic-shape shape-square w-64 h-64 top-[20%] right-[-2%] shape-anim delay-100"></div>
+        <div class="classic-shape shape-circle shape-filled w-80 h-80 bottom-[10%] left-[10%] shape-anim delay-200">
         </div>
-        <div
-            class="classic-shape shape-circle shape-filled w-60 h-60 md:w-80 md:h-80 bottom-[10%] left-[10%] shape-anim delay-200">
-        </div>
-        <div class="classic-shape shape-square w-32 h-32 md:w-48 md:h-48 bottom-[30%] right-[20%] shape-anim delay-300">
-        </div>
+        <div class="classic-shape shape-square w-48 h-48 bottom-[30%] right-[20%] shape-anim delay-300"></div>
+        <div class="classic-shape shape-circle w-32 h-32 top-[40%] left-[40%] shape-filled shape-anim delay-500"></div>
     </div>
 
     <!-- NAVBAR (Top) -->
@@ -277,9 +236,8 @@
     <!-- MOBILE BOTTOM NAVIGATION BAR (App-Like Feature) -->
     <div
         class="md:hidden fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-lg border-t border-gray-200 z-[90] mobile-bottom-nav flex justify-around items-center h-16 px-2">
-        <a href="index.html
-            class=" nav-item active flex flex-col items-center justify-center w-full h-full text-gray-400
-            hover:text-classic-black transition-colors">
+        <a href="index.html"
+            class="nav-item active flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-classic-black transition-colors">
             <i class="fa-solid fa-house text-lg mb-1"></i>
             <span class="text-[10px] font-sans font-medium uppercase tracking-wider">Home</span>
         </a>
@@ -302,135 +260,120 @@
     </div>
 
     <!-- HERO SECTION -->
-    <header class="relative pt-32 pb-16 lg:pt-48 lg:pb-32 bg-white z-10">
+    <header class="relative pt-32 pb-24 lg:pt-48 lg:pb-32 bg-white z-10">
         <div class="container mx-auto px-6 lg:px-12 relative">
             <div class="max-w-4xl mx-auto text-center">
 
                 <p
-                    class="font-sans text-[10px] md:text-xs font-semibold tracking-[0.2em] text-gray-400 uppercase mb-6 md:mb-8 opacity-0 hero-anim">
-                    Established 2024
+                    class="font-sans text-xs font-semibold tracking-[0.2em] text-gray-400 uppercase mb-8 opacity-0 hero-anim">
+                    How We Work
                 </p>
 
                 <h1
-                    class="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-classic-black leading-[1.1] mb-8 md:mb-10 opacity-0 hero-anim">
-                    Digital excellence <br>
-                    <span class="italic font-light text-gray-600">redefined.</span>
+                    class="font-serif text-5xl md:text-7xl lg:text-8xl text-classic-black leading-[1.1] mb-10 opacity-0 hero-anim">
+                    Our Process <br>
+                    <span class="italic font-light text-gray-600">unveiled.</span>
                 </h1>
 
                 <p
-                    class="font-sans text-base md:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed mb-10 md:mb-12 opacity-0 hero-anim font-light px-4">
-                    We craft sophisticated websites and digital strategies for brands that value clarity, elegance, and
-                    enduring impact.
+                    class="font-sans text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed mb-12 opacity-0 hero-anim font-light">
+                    We believe in a collaborative approach that starts with understanding your vision. From gathering
+                    requirements to delivering exceptional results, every step is designed to bring your ideas to life.
                 </p>
 
                 <div class="opacity-0 hero-anim">
-                    <a href="#services"
-                        class="inline-flex items-center gap-3 text-classic-black font-medium btn-classic pb-1 text-sm md:text-base">
-                        View Selected Works <i class="fa-solid fa-arrow-right text-xs"></i>
+                    <a href="#process"
+                        class="inline-flex items-center gap-3 text-classic-black font-medium btn-classic pb-1">
+                        Explore Our Process <i class="fa-solid fa-arrow-right text-xs"></i>
                     </a>
                 </div>
 
             </div>
+
+
         </div>
     </header>
 
-    <!-- ABOUT / PHILOSOPHY -->
-    <section id="about" class="py-16 md:py-32 bg-classic-gray relative z-10 scroll-mt-20">
+    <!-- PROCESS STEPS -->
+    <section id="process" class="py-32 bg-classic-gray relative z-10">
         <div class="container mx-auto px-6 lg:px-12">
-            <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-start">
-                <div class="md:w-1/3 md:sticky md:top-32 static">
-                    <h2 class="font-serif text-3xl md:text-4xl text-classic-black mb-4 md:mb-6">Our Philosophy</h2>
-                    <div class="h-0.5 w-12 bg-classic-black mb-6 md:mb-0"></div>
-                </div>
-                <div class="md:w-2/3">
-                    <p class="text-xl md:text-3xl font-serif text-classic-charcoal leading-relaxed mb-10 md:mb-12">
-                        "Simplicity is the ultimate sophistication. We strip away the unnecessary to reveal the essence
-                        of your brand."
-                    </p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                        <div>
-                            <h4
-                                class="font-sans font-bold text-sm uppercase tracking-widest mb-4 border-b border-gray-200 pb-2 inline-block">
-                                Precision</h4>
-                            <p class="text-gray-500 font-light leading-relaxed text-sm md:text-base">Every pixel serves
-                                a purpose. We believe
-                                in design that communicates clearly without shouting. Our layouts breathe, allowing your
-                                content to take center stage.</p>
-                        </div>
-                        <div>
-                            <h4
-                                class="font-sans font-bold text-sm uppercase tracking-widest mb-4 border-b border-gray-200 pb-2 inline-block">
-                                Function</h4>
-                            <p class="text-gray-500 font-light leading-relaxed text-sm md:text-base">Beautiful design is
-                                meaningless without
-                                performance. We build robust systems that scale with your business, ensuring rapid load
-                                times and fluid interactions.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SERVICES -->
-    <section id="services" class="py-16 md:py-32 bg-white relative z-10 scroll-mt-20">
-        <div class="container mx-auto px-6 lg:px-12">
-            <div class="text-center mb-12 md:mb-24">
-                <span class="font-sans text-xs font-bold tracking-widest text-gray-400 uppercase">What We Do</span>
-                <h2 class="font-serif text-3xl md:text-4xl text-classic-black mt-4">Our Expertise</h2>
+            <div class="text-center mb-24">
+                <span class="font-sans text-xs font-bold tracking-widest text-gray-400 uppercase">Our Methodology</span>
+                <h2 class="font-serif text-4xl text-classic-black mt-4">The Steps We Take</h2>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                <!-- Service 1 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Step 1 -->
                 <div
-                    class="service-card p-8 md:p-12 bg-white border border-gray-100 text-center relative overflow-hidden group rounded-lg md:rounded-none shadow-sm md:shadow-none">
+                    class="service-card p-8 bg-white border border-gray-100 text-center relative overflow-hidden group">
                     <div
                         class="absolute inset-0 bg-gray-50 transform scale-y-0 origin-bottom transition-transform duration-500 group-hover:scale-y-100 z-0">
                     </div>
                     <div class="relative z-10">
                         <div
-                            class="w-12 h-12 mx-auto bg-gray-50 group-hover:bg-white rounded-full flex items-center justify-center mb-6 md:mb-8 text-classic-black transition-colors">
-                            <i class="fa-regular fa-window-maximize"></i>
+                            class="w-16 h-16 mx-auto bg-gray-50 group-hover:bg-white rounded-full flex items-center justify-center mb-6 text-classic-black transition-colors">
+                            <i class="fa-solid fa-clipboard-list text-2xl"></i>
                         </div>
-                        <h3 class="font-serif text-xl md:text-2xl mb-3 md:mb-4">Web Design</h3>
+                        <h3 class="font-serif text-xl mb-4">Gather Requirements</h3>
                         <p class="text-gray-500 font-light text-sm leading-relaxed">
-                            Bespoke interfaces designed with a focus on typography, layout, and user experience.
+                            We start by thoroughly understanding your needs, goals, and vision through detailed
+                            consultations and analysis.
                         </p>
                     </div>
                 </div>
 
-                <!-- Service 2 -->
+                <!-- Step 2 -->
                 <div
-                    class="service-card p-8 md:p-12 bg-white border border-gray-100 text-center relative overflow-hidden group rounded-lg md:rounded-none shadow-sm md:shadow-none">
+                    class="service-card p-8 bg-white border border-gray-100 text-center relative overflow-hidden group">
                     <div
                         class="absolute inset-0 bg-gray-50 transform scale-y-0 origin-bottom transition-transform duration-500 group-hover:scale-y-100 z-0">
                     </div>
                     <div class="relative z-10">
                         <div
-                            class="w-12 h-12 mx-auto bg-gray-50 group-hover:bg-white rounded-full flex items-center justify-center mb-6 md:mb-8 text-classic-black transition-colors">
-                            <i class="fa-solid fa-code"></i>
+                            class="w-16 h-16 mx-auto bg-gray-50 group-hover:bg-white rounded-full flex items-center justify-center mb-6 text-classic-black transition-colors">
+                            <i class="fa-solid fa-palette text-2xl"></i>
                         </div>
-                        <h3 class="font-serif text-xl md:text-2xl mb-3 md:mb-4">Development</h3>
+                        <h3 class="font-serif text-xl mb-4">Design & Plan</h3>
                         <p class="text-gray-500 font-light text-sm leading-relaxed">
-                            Clean code architecture using modern frameworks. Semantic HTML, accessibility, and SEO.
+                            Our team creates wireframes, mockups, and strategic plans that align with your brand and
+                            objectives.
                         </p>
                     </div>
                 </div>
 
-                <!-- Service 3 -->
+                <!-- Step 3 -->
                 <div
-                    class="service-card p-8 md:p-12 bg-white border border-gray-100 text-center relative overflow-hidden group rounded-lg md:rounded-none shadow-sm md:shadow-none">
+                    class="service-card p-8 bg-white border border-gray-100 text-center relative overflow-hidden group">
                     <div
                         class="absolute inset-0 bg-gray-50 transform scale-y-0 origin-bottom transition-transform duration-500 group-hover:scale-y-100 z-0">
                     </div>
                     <div class="relative z-10">
                         <div
-                            class="w-12 h-12 mx-auto bg-gray-50 group-hover:bg-white rounded-full flex items-center justify-center mb-6 md:mb-8 text-classic-black transition-colors">
-                            <i class="fa-solid fa-pen-nib"></i>
+                            class="w-16 h-16 mx-auto bg-gray-50 group-hover:bg-white rounded-full flex items-center justify-center mb-6 text-classic-black transition-colors">
+                            <i class="fa-solid fa-code text-2xl"></i>
                         </div>
-                        <h3 class="font-serif text-xl md:text-2xl mb-3 md:mb-4">Brand Identity</h3>
+                        <h3 class="font-serif text-xl mb-4">Develop & Build</h3>
                         <p class="text-gray-500 font-light text-sm leading-relaxed">
-                            Strategic branding that tells your story through logos, colors, and typography.
+                            We bring designs to life with clean, efficient code, ensuring functionality, performance,
+                            and scalability.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div
+                    class="service-card p-8 bg-white border border-gray-100 text-center relative overflow-hidden group">
+                    <div
+                        class="absolute inset-0 bg-gray-50 transform scale-y-0 origin-bottom transition-transform duration-500 group-hover:scale-y-100 z-0">
+                    </div>
+                    <div class="relative z-10">
+                        <div
+                            class="w-16 h-16 mx-auto bg-gray-50 group-hover:bg-white rounded-full flex items-center justify-center mb-6 text-classic-black transition-colors">
+                            <i class="fa-solid fa-rocket text-2xl"></i>
+                        </div>
+                        <h3 class="font-serif text-xl mb-4">Deliver & Support</h3>
+                        <p class="text-gray-500 font-light text-sm leading-relaxed">
+                            We launch your project and provide ongoing support to ensure continued success and growth.
                         </p>
                     </div>
                 </div>
@@ -438,87 +381,21 @@
         </div>
     </section>
 
-    <!-- NEW SECTION: PROCESS -->
-    <section id="process" class="py-16 md:py-32 bg-classic-gray relative z-10 border-t border-gray-100 scroll-mt-20">
+    <!-- CONCLUSION / CTA -->
+    <section class="py-32 bg-white text-center relative z-10 border-t border-gray-50">
         <div class="container mx-auto px-6 lg:px-12">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16">
-                <div>
-                    <h2 class="font-serif text-3xl md:text-4xl text-classic-black mb-6 md:mb-8">The Process</h2>
-                    <p class="text-gray-500 font-light leading-relaxed max-w-md text-sm md:text-base">
-                        Our methodology is rooted in collaboration and transparency. We guide you through every stage,
-                        ensuring the final result exceeds expectations.
-                    </p>
-                </div>
-                <div class="space-y-10 md:space-y-12">
-                    <div class="flex gap-6 group">
-                        <div
-                            class="font-serif text-3xl md:text-4xl text-gray-300 group-hover:text-black transition-colors">
-                            01.
-                        </div>
-                        <div>
-                            <h3 class="font-serif text-lg md:text-xl mb-2 text-classic-black">Discovery & Strategy</h3>
-                            <p class="text-gray-500 font-light text-sm">We immerse ourselves in your business to
-                                understand your goals, audience, and market position.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-6 group">
-                        <div
-                            class="font-serif text-3xl md:text-4xl text-gray-300 group-hover:text-black transition-colors">
-                            02.
-                        </div>
-                        <div>
-                            <h3 class="font-serif text-lg md:text-xl mb-2 text-classic-black">Curation & Design</h3>
-                            <p class="text-gray-500 font-light text-sm">We explore visual directions and craft
-                                prototypes that align with your brand's essence.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-6 group">
-                        <div
-                            class="font-serif text-3xl md:text-4xl text-gray-300 group-hover:text-black transition-colors">
-                            03.
-                        </div>
-                        <div>
-                            <h3 class="font-serif text-lg md:text-xl mb-2 text-classic-black">Elevation & Launch</h3>
-                            <p class="text-gray-500 font-light text-sm">We refine, test, and deploy. Post-launch, we
-                                provide support to ensure continued success.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <h2 class="font-serif text-4xl md:text-5xl text-classic-black mb-8">Ready to Start Your Project?</h2>
+            <p class="text-gray-500 font-light text-lg max-w-2xl mx-auto mb-12">
+                Let's collaborate to turn your vision into reality. Contact us today to discuss your requirements and
+                begin the journey.
+            </p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScEjtXoZ86KljP-ulFYZBaUaOu0nf7lczK6e7ZcNxssoeyWkg/viewform?usp=dialog"
+                class="inline-block px-8 py-4 bg-classic-black text-white text-lg font-medium hover:bg-gray-800 transition shadow-lg shadow-gray-200 rounded-sm">
+                Get Started
+            </a>
         </div>
     </section>
-
-    <!-- TESTIMONIAL -->
-    <section class="py-20 md:py-32 bg-white text-center relative z-10 border-t border-gray-50">
-        <div class="container mx-auto px-6">
-            <i class="fa-solid fa-quote-left text-2xl md:text-3xl text-gray-200 mb-6 md:mb-8"></i>
-            <blockquote
-                class="font-serif text-2xl md:text-5xl max-w-5xl mx-auto leading-tight text-classic-black mb-8 md:mb-12">
-                "Texnox transformed our digital presence with an elegance we didn't know was possible. They are true
-                artisans of the web."
-            </blockquote>
-            <cite class="font-sans text-xs md:text-sm font-bold uppercase tracking-widest not-italic text-gray-400">
-                Team Texnox</cite>
-        </div>
-    </section>
-
-    <!-- NEW SECTION: NEWSLETTER -->
-    <section class="py-16 md:py-24 bg-classic-black text-white relative z-10">
-        <div class="container mx-auto px-6 lg:px-12 text-center">
-            <h2 class="font-serif text-2xl md:text-4xl mb-4 md:mb-6">Stay Inspired</h2>
-            <p class="text-gray-400 font-light mb-8 md:mb-10 max-w-lg mx-auto text-sm md:text-base">Join our curated
-                newsletter for insights on
-                design, technology, and culture. No spam, just substance.</p>
-            <form class="max-w-md mx-auto flex border-b border-gray-700 pb-2">
-                <input type="email" placeholder="Email Address"
-                    class="bg-transparent w-full outline-none text-white placeholder-gray-600 font-sans p-2">
-                <button type="submit"
-                    class="text-gray-400 hover:text-white uppercase font-bold text-xs tracking-widest transition shrink-0">Subscribe</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
+<!-- FOOTER -->
     <footer id="contact" class="bg-classic-gray pt-16 md:pt-24 pb-10 relative z-10 border-t border-gray-100">
         <div class="container mx-auto px-6 lg:px-12">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 mb-16 md:mb-24">
@@ -569,32 +446,35 @@
         // 1. GSAP INIT
         gsap.registerPlugin(ScrollTrigger);
 
-        function initAnimations() {
-            // Hero Text Fade In
-            gsap.to('.hero-anim', {
-                y: 0,
-                opacity: 1,
-                duration: 1.2,
-                stagger: 0.2,
-                ease: "power3.out",
-                delay: 0.2
-            });
+        // Hero Text Fade In
+        gsap.to('.hero-anim', {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            stagger: 0.2,
+            ease: "power3.out",
+            delay: 0.2
+        });
 
-            // Scroll Animations for Services
-            gsap.utils.toArray('.service-card').forEach((card, i) => {
-                gsap.from(card, {
-                    scrollTrigger: {
-                        trigger: card,
-                        start: "top 90%", // Trigger earlier on mobile
-                    },
-                    y: 30,
-                    opacity: 0,
-                    duration: 0.8,
-                    ease: "power2.out",
-                    delay: i * 0.1
-                });
+        // Image Reveal
+        setTimeout(() => {
+            document.getElementById('hero-img').classList.add('active');
+        }, 500);
+
+        // Scroll Animations for Services
+        gsap.utils.toArray('.service-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%",
+                },
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out",
+                delay: i * 0.1
             });
-        }
+        });
 
         // Animate Shapes
         gsap.to('.shape-anim', {
@@ -626,7 +506,6 @@
                 });
             });
         });
-
         // LOADER LOGIC
         window.addEventListener('load', () => {
             const loader = document.getElementById('loader');
@@ -641,34 +520,19 @@
 
         // MOBILE MENU LOGIC
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu'); // Fixed selector to match ID
+        const mobileMenu = document.getElementById('mobile-menu');
         let isMenuOpen = false;
 
-        function toggleMenu() {
+        mobileMenuBtn.addEventListener('click', () => {
             isMenuOpen = !isMenuOpen;
             if (isMenuOpen) {
                 mobileMenu.style.transform = 'translateY(0)';
                 mobileMenuBtn.innerHTML = '<i class="fa-solid fa-times"></i>';
                 mobileMenuBtn.setAttribute('title', 'Close menu');
             } else {
-                mobileMenu.style.transform = 'translateY(-150%)'; // Slide up completely
+                mobileMenu.style.transform = 'translateY(-100%)';
                 mobileMenuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
                 mobileMenuBtn.setAttribute('title', 'Open menu');
             }
-        }
-
-        // Make Bottom Nav Active State Work (Simple hash check)
-        const navItems = document.querySelectorAll('.nav-item');
-        navItems.forEach(item => {
-            item.addEventListener('click', function () {
-                navItems.forEach(nav => nav.classList.remove('active', 'text-classic-black'));
-                navItems.forEach(nav => nav.classList.add('text-gray-400'));
-
-                this.classList.remove('text-gray-400');
-                this.classList.add('active', 'text-classic-black');
-            });
         });
     </script>
-</body>
-
-</html>

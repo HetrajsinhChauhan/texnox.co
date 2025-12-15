@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Texnox | Membership</title>
+    <title>Texnox | Pricing Plans</title>
     <meta name="description" content="Exclusive membership plans for digital growth.">
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Fonts: Playfair Display (Classic Serif) & Inter (Modern Sans) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -65,6 +68,7 @@
             transition: all 0.3s ease;
             z-index: 1;
         }
+
         .btn-classic::after {
             content: '';
             position: absolute;
@@ -78,10 +82,12 @@
             transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1);
             z-index: -1;
         }
+
         .btn-classic:hover::after {
             transform: scaleX(1);
             transform-origin: left;
         }
+
         .btn-classic:hover {
             color: white;
             border-color: #333;
@@ -90,36 +96,71 @@
         /* --- PRICING CARD --- */
         .price-card {
             transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
         }
+
+        .price-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #C5A059, #d4af37);
+        }
+
         .price-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.05);
-            border-color: #1a1a1a;
+            box-shadow: 0 25px 50px -5px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(197, 160, 89, 0.2);
+            border-color: #C5A059;
         }
-        
+
+        .price-card .premium-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(135deg, #C5A059, #d4af37);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            z-index: 10;
+        }
+
         /* Highlight specific card */
         .price-card.featured {
             background-color: #1a1a1a;
             color: white;
             transform: scale(1.02);
         }
+
         .price-card.featured:hover {
             transform: scale(1.02) translateY(-8px);
         }
+
         .price-card.featured .text-gray-500 {
             color: #a1a1aa;
         }
+
         .price-card.featured .border-gray-100 {
             border-color: #333;
         }
+
         .price-card.featured .btn-classic {
             background-color: white;
             color: #1a1a1a;
             border-color: white;
         }
+
         .price-card.featured .btn-classic::after {
             background-color: #d4d4d8;
         }
+
         .price-card.featured .btn-classic:hover {
             color: #1a1a1a;
         }
@@ -130,27 +171,50 @@
             z-index: 0;
             pointer-events: none;
         }
-        .shape-circle { border-radius: 50%; border: 1px solid rgba(0, 0, 0, 0.04); }
-        .shape-square { border: 1px solid rgba(0, 0, 0, 0.04); }
-        .shape-filled { background-color: rgba(0, 0, 0, 0.02); border: none; }
+
+        .shape-circle {
+            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .shape-square {
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .shape-filled {
+            background-color: rgba(0, 0, 0, 0.02);
+            border: none;
+        }
 
         /* --- LOADER --- */
         .loader-line {
             animation: loadLine 1.5s ease-in-out infinite;
         }
+
         @keyframes loadLine {
-            0% { transform: translateX(-100%); }
-            50% { transform: translateX(0); }
-            100% { transform: translateX(100%); }
+            0% {
+                transform: translateX(-100%);
+            }
+
+            50% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
         }
     </style>
 </head>
+
 <body class="antialiased selection:bg-gray-200 selection:text-black">
 
     <!-- LOADER -->
-    <div id="loader" class="fixed inset-0 bg-white z-[100] flex flex-col items-center justify-center transition-opacity duration-700">
+    <div id="loader"
+        class="fixed inset-0 bg-white z-[100] flex flex-col items-center justify-center transition-opacity duration-700">
         <div class="text-center">
-            <span class="font-serif text-4xl font-bold tracking-tight text-classic-black block mb-6 animate-pulse">Texnox.</span>
+            <span
+                class="font-serif text-4xl font-bold tracking-tight text-classic-black block mb-6 animate-pulse">Texnox.</span>
             <div class="w-32 h-[1px] bg-gray-100 overflow-hidden relative mx-auto">
                 <div class="absolute inset-0 bg-classic-black w-full h-full loader-line"></div>
             </div>
@@ -165,10 +229,10 @@
         <div class="classic-shape shape-circle shape-filled w-32 h-32 top-[40%] left-[20%] shape-anim delay-500"></div>
     </div>
 
-    <!-- NAVBAR -->
-        <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100 transition-all duration-300"
+    <!-- NAVBAR (Top) -->
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-all duration-300"
         id="navbar">
-        <div class="container mx-auto px-6 lg:px-12 h-20 flex justify-between items-center relative z-50">
+        <div class="container mx-auto px-6 lg:px-12 h-16 md:h-20 flex justify-between items-center relative z-50">
 
             <!-- Logo -->
             <a href="#" class="font-serif font-bold text-2xl tracking-tight text-classic-black">
@@ -178,12 +242,13 @@
             <!-- Menu (Desktop) -->
             <div class="hidden md:flex items-center gap-10 font-sans text-sm font-medium text-gray-500 tracking-wide">
                 <a href="index.html" class="hover:text-black transition-colors">Home</a>
-                <a href="demo.html" class="hover:text-black transition-colors">Demo & Templates</a>
-                <!-- <a href="plans.html" class="hover:text-black transition-colors">Plans</a> -->
-                <a href="aboutus.html" class="hover:text-black transition-colors">About us</a>
+                <a href="demo.html" class="hover:text-black transition-colors">Demo</a>
+                <a href="plans.html" class="hover:text-black transition-colors">Plans</a>
+                <a href="aboutus.html" class="hover:text-black transition-colors">About</a>
+                <a href="Howwework.html" class="hover:text-black transition-colors">How we Work</a>
             </div>
 
-            <!-- CTA -->
+            <!-- CTA (Desktop Only) -->
             <div class="hidden md:block">
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLScEjtXoZ86KljP-ulFYZBaUaOu0nf7lczK6e7ZcNxssoeyWkg/viewform?usp=dialog"
                     class="px-6 py-3 bg-classic-black text-white text-sm font-medium hover:bg-gray-800 transition shadow-lg shadow-gray-200 rounded-sm">
@@ -191,24 +256,76 @@
                 </a>
             </div>
 
-            <!-- Mobile Button -->
-            <button class="md:hidden text-classic-black text-lg">
+            <!-- Mobile Menu Button (Hamburger - visible on mobile but we'll prioritize bottom nav) -->
+            <button onclick="toggleMenu()" id="mobile-menu-btn" class="md:hidden text-classic-black text-xl p-2"
+                title="Toggle menu">
                 <i class="fa-solid fa-bars"></i>
             </button>
+
+        </div>
+
+        <!-- Mobile Menu (Drop down style) -->
+        <div id="mobile-menu"
+            class="md:hidden fixed top-[64px] left-0 w-full bg-white/95 backdrop-blur-xl border-b border-gray-100 transform -translate-y-[150%] transition-transform duration-300 ease-in-out z-40 shadow-xl">
+            <div class="container mx-auto px-6 py-8">
+                <div class="flex flex-col gap-6 font-sans text-lg font-medium text-gray-600 tracking-wide text-center">
+                    <a href="index.html" class="hover:text-black transition-colors py-2 border-b border-gray-50"
+                        onclick="toggleMenu()">Home</a>
+                    <a href="#services" class="hover:text-black transition-colors py-2 border-b border-gray-50"
+                        onclick="toggleMenu()">Services</a>
+                    <a href="plans.html" class="hover:text-black transition-colors py-2 border-b border-gray-50"
+                        onclick="toggleMenu()">Pricing</a>
+                    <a href="aboutus.html" class="hover:text-black transition-colors py-2 border-b border-gray-50"
+                        onclick="toggleMenu()">About</a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScEjtXoZ86KljP-ulFYZBaUaOu0nf7lczK6e7ZcNxssoeyWkg/viewform?usp=dialog"
+                        class="px-6 py-4 mt-4 bg-classic-black text-white text-sm font-medium hover:bg-gray-800 transition shadow-lg rounded-sm inline-block w-full">
+                        Get in Touch
+                    </a>
+                </div>
+            </div>
         </div>
     </nav>
+
+    <!-- MOBILE BOTTOM NAVIGATION BAR (App-Like Feature) -->
+    <div
+        class="md:hidden fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-lg border-t border-gray-200 z-[90] mobile-bottom-nav flex justify-around items-center h-16 px-2">
+        <a href="index.html"
+            class="nav-item active flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-classic-black transition-colors">
+            <i class="fa-solid fa-house text-lg mb-1"></i>
+            <span class="text-[10px] font-sans font-medium uppercase tracking-wider">Home</span>
+        </a>
+        <a href="demo.html"
+            class="nav-item flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-classic-black transition-colors">
+            <i class="fa-solid fa-layer-group text-lg mb-1"></i>
+            <span class="text-[10px] font-sans font-medium uppercase tracking-wider">Demo</span>
+        </a>
+        <a href="plans.html"
+            class="nav-item flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-classic-black transition-colors">
+            <i class="fa-solid fa-tags text-lg mb-1"></i>
+            <span class="text-[10px] font-sans font-medium uppercase tracking-wider">Pricing</span>
+        </a>
+        <a href="aboutus.html"
+            class="nav-item flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-classic-black transition-colors">
+            <i class="fa-solid fa-list-check text-lg mb-1"></i>
+            <span class="text-[10px] font-sans font-medium uppercase tracking-wider">About us</span>
+        </a>
+
+    </div>
     <!-- HERO SECTION -->
     <header class="relative pt-32 pb-16 lg:pt-48 lg:pb-24 bg-white z-10">
         <div class="container mx-auto px-6 lg:px-12 text-center">
-            <p class="font-sans text-xs font-semibold tracking-[0.2em] text-gray-400 uppercase mb-8 opacity-0 hero-anim">
-                Partnership Tiers
+            <p
+                class="font-sans text-xs font-semibold tracking-[0.2em] text-gray-400 uppercase mb-8 opacity-0 hero-anim">
+                Pricing Plans
             </p>
-            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl text-classic-black leading-[1.1] mb-10 opacity-0 hero-anim">
+            <h1
+                class="font-serif text-5xl md:text-7xl lg:text-8xl text-classic-black leading-[1.1] mb-10 opacity-0 hero-anim">
                 Select your <br>
-                <span class="italic font-light text-gray-600">privilege.</span>
+                <span class="italic font-light text-gray-600">plan.</span>
             </h1>
             <p class="font-sans text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed opacity-0 hero-anim font-light">
-                Continuous design support and digital evolution for brands that refuse to settle. Choose the level of engagement that suits your vision.
+                Professional website development services tailored to your business needs. Choose the perfect plan to
+                bring your vision to life.
             </p>
         </div>
     </header>
@@ -216,14 +333,19 @@
     <!-- DISCOUNT SECTION -->
     <section class="pb-24 relative z-10 opacity-0 scroll-anim">
         <div class="container mx-auto px-6 lg:px-12">
-            <div class="bg-classic-gray border border-gray-100 p-8 md:p-12 max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 rounded-sm">
+            <div
+                class="bg-classic-gray border border-gray-100 p-8 md:p-12 max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 rounded-sm">
                 <div>
-                    <span class="font-sans text-xs font-bold uppercase tracking-widest text-classic-gold mb-2 block">Limited Privilege</span>
+                    <span
+                        class="font-sans text-xs font-bold uppercase tracking-widest text-classic-gold mb-2 block">Limited
+                        Privilege</span>
                     <h2 class="font-serif text-3xl text-classic-black mb-2">The Annual Advantage</h2>
-                    <p class="text-gray-500 font-light">Commit to a year of excellence and receive <span class="font-medium text-classic-black">2 months complimentary</span>.</p>
+                    <p class="text-gray-500 font-light">Commit to a year of excellence and receive <span
+                            class="font-medium text-classic-black">2 months complimentary</span>.</p>
                 </div>
                 <div>
-                    <button class="px-8 py-3 bg-white border border-gray-200 text-classic-black font-medium hover:border-classic-black transition rounded-sm shadow-sm">
+                    <button
+                        class="px-8 py-3 bg-white border border-gray-200 text-classic-black font-medium hover:border-classic-black transition rounded-sm shadow-sm">
                         Apply Annual Pricing
                     </button>
                 </div>
@@ -231,107 +353,337 @@
         </div>
     </section>
 
-    <!-- PRICING GRID (5 PLANS) -->
+    <!-- SPECIAL PLANS SECTION -->
+    <section class="pb-24 bg-gradient-to-br from-gray-50 to-white relative z-10">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16">
+                <p class="font-sans text-xs font-semibold tracking-[0.2em] text-classic-gold uppercase mb-4">Exclusive
+                    Plans</p>
+                <h2 class="font-serif text-4xl md:text-5xl text-classic-black mb-6">Special</h2>
+                <p class="font-sans text-lg text-gray-500 max-w-2xl mx-auto">Premium plans designed for businesses
+                    seeking advanced features and exceptional performance.</p>
+            </div>
+
+            <!-- Special Plans Grid -->
+            <div class="flex flex-wrap justify-center gap-8">
+
+                <!-- Special Theme Website -->
+                <div
+                    class="price-card w-full md:w-[45%] lg:w-[45%] bg-white border border-gray-100 p-10 flex flex-col shadow-lg opacity-0 scroll-anim">
+                    <div class="premium-badge">Premium</div>
+                    <div class="mb-6">
+                        <span class="font-sans text-xs font-bold uppercase tracking-widest text-gray-400">Special</span>
+                        <h3 class="font-serif text-3xl mt-2">Special Theme Website</h3>
+                    </div>
+                    <div class="mb-8 pb-8 border-b border-gray-100">
+                        <span class="font-serif text-4xl text-classic-black">₹24,999</span>
+                    </div>
+                    <ul class="space-y-4 mb-10 flex-grow font-light text-gray-500 text-sm">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Website with
+                            festival themes</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Modern UI/UX</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Advanced
+                            animations</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Mobile responsive
+                        </li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Personal domain &
+                            hosting</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Automatic theme
+                            change (date-based)</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Auto revert to
+                            default theme</li>
+                    </ul>
+                    <a href="#contact"
+                        class="block w-full py-4 text-center border border-gray-200 text-classic-black font-medium btn-classic uppercase text-xs tracking-widest">Select
+                        Plan</a>
+                </div>
+
+                <!-- Enterprise / Premium Pro -->
+                <div
+                    class="price-card featured w-full md:w-[45%] lg:w-[45%] border border-classic-black p-10 flex flex-col shadow-2xl relative opacity-0 scroll-anim">
+                    <div
+                        class="absolute top-0 right-0 bg-classic-gold text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1">
+                        Most Popular</div>
+                    <div class="mb-6">
+                        <span class="font-sans text-xs font-bold uppercase tracking-widest opacity-60">Enterprise</span>
+                        <h3 class="font-serif text-3xl mt-2">Enterprise / Premium Pro</h3>
+                    </div>
+                    <div class="mb-8 pb-8 border-b border-gray-700">
+                        <span class="font-serif text-4xl">₹49,999+</span>
+                        <span class="font-sans text-sm opacity-60">(Depends on features)</span>
+                    </div>
+                    <ul class="space-y-4 mb-10 flex-grow font-light opacity-80 text-sm">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Best for large businesses & serious brands</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Fully custom website or e-commerce platform</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Ultra-premium UI/UX (brand-focused design)</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            High-end animations & smooth transitions</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Fully responsive (mobile, tablet, desktop)</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Personal domain & premium hosting included</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Advanced SEO optimization</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Admin dashboard / CMS access</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Payment gateway integration (for e-commerce)</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Security & performance optimization</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            1 month free maintenance & support</li>
+                    </ul>
+                    <a href="#contact"
+                        class="block w-full py-4 text-center border border-white bg-white text-classic-black font-medium btn-classic uppercase text-xs tracking-widest">Select
+                        Plan</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING GRID (Standard Plans) -->
     <section class="pb-32 bg-white relative z-10">
         <div class="container mx-auto px-6 lg:px-12">
-            
+
             <!-- Flex container to center nicely -->
             <div class="flex flex-wrap justify-center gap-6 lg:gap-8">
 
-                <!-- Plan 1: Essential -->
-                <div class="price-card w-full md:w-[45%] lg:w-[30%] bg-white border border-gray-100 p-10 flex flex-col opacity-0 scroll-anim">
+                <!-- Plan 1: Basic Website -->
+                <div
+                    class="price-card w-full md:w-[45%] lg:w-[30%] bg-white border border-gray-100 p-10 flex flex-col opacity-0 scroll-anim">
                     <div class="mb-6">
-                        <span class="font-sans text-xs font-bold uppercase tracking-widest text-gray-400">Entry</span>
-                        <h3 class="font-serif text-3xl mt-2">Essential</h3>
+                        <span class="font-sans text-xs font-bold uppercase tracking-widest text-gray-400">Basic</span>
+                        <h3 class="font-serif text-3xl mt-2">Basic Website</h3>
                     </div>
                     <div class="mb-8 pb-8 border-b border-gray-100">
-                        <span class="font-serif text-4xl text-classic-black">$2,500</span>
-                        <span class="font-sans text-sm text-gray-400">/mo</span>
+                        <span class="font-serif text-4xl text-classic-black">₹5,000</span>
                     </div>
                     <ul class="space-y-4 mb-10 flex-grow font-light text-gray-500 text-sm">
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> 1 Active Request</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> 48h Turnaround</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> UI/UX Design</li>
-                        <li class="flex items-center gap-3 text-gray-300"><i class="fa-solid fa-minus text-xs"></i> Development</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Website only</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Modern UI/UX
+                            design</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Smooth &
+                            attractive animations</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Fully mobile
+                            responsive</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Vercel hosting
+                            included</li>
                     </ul>
-                    <a href="#contact" class="block w-full py-4 text-center border border-gray-200 text-classic-black font-medium btn-classic uppercase text-xs tracking-widest">Select Plan</a>
+                    <a href="#contact"
+                        class="block w-full py-4 text-center border border-gray-200 text-classic-black font-medium btn-classic uppercase text-xs tracking-widest">Select
+                        Plan</a>
                 </div>
 
-                <!-- Plan 2: Growth -->
-                <div class="price-card w-full md:w-[45%] lg:w-[30%] bg-white border border-gray-100 p-10 flex flex-col opacity-0 scroll-anim">
+                <!-- Plan 2: Standard Website -->
+                <div
+                    class="price-card w-full md:w-[45%] lg:w-[30%] bg-white border border-gray-100 p-10 flex flex-col opacity-0 scroll-anim">
                     <div class="mb-6">
-                        <span class="font-sans text-xs font-bold uppercase tracking-widest text-gray-400">Standard</span>
-                        <h3 class="font-serif text-3xl mt-2">Growth</h3>
+                        <span
+                            class="font-sans text-xs font-bold uppercase tracking-widest text-gray-400">Standard</span>
+                        <h3 class="font-serif text-3xl mt-2">Standard Website</h3>
                     </div>
                     <div class="mb-8 pb-8 border-b border-gray-100">
-                        <span class="font-serif text-4xl text-classic-black">$4,500</span>
-                        <span class="font-sans text-sm text-gray-400">/mo</span>
+                        <span class="font-serif text-4xl text-classic-black">₹13,000</span>
                     </div>
                     <ul class="space-y-4 mb-10 flex-grow font-light text-gray-500 text-sm">
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> 2 Active Requests</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Web Development</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> CMS Integration</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Priority Support</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Complete website
+                        </li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Modern UI/UX
+                            design</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Advanced
+                            animations & interactions</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Fully mobile
+                            responsive</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Personal domain &
+                            hosting included</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Free One Month
+                            Maintanance</li>
                     </ul>
-                    <a href="#contact" class="block w-full py-4 text-center border border-gray-200 text-classic-black font-medium btn-classic uppercase text-xs tracking-widest">Select Plan</a>
+                    <a href="#contact"
+                        class="block w-full py-4 text-center border border-gray-200 text-classic-black font-medium btn-classic uppercase text-xs tracking-widest">Select
+                        Plan</a>
                 </div>
 
-                <!-- Plan 3: Partner (Featured) -->
-                <div class="price-card featured w-full md:w-[45%] lg:w-[30%] border border-classic-black p-10 flex flex-col shadow-2xl relative opacity-0 scroll-anim">
-                    <div class="absolute top-0 right-0 bg-classic-gold text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1">Most Popular</div>
+                <!-- Plan 3: E-Commerce Website -->
+                <div
+                    class="price-card w-full md:w-[45%] lg:w-[30%] bg-white border border-gray-100 p-10 flex flex-col opacity-0 scroll-anim">
                     <div class="mb-6">
-                        <span class="font-sans text-xs font-bold uppercase tracking-widest opacity-60">Full Access</span>
-                        <h3 class="font-serif text-3xl mt-2">Partner</h3>
+                        <span
+                            class="font-sans text-xs font-bold uppercase tracking-widest text-gray-400">E-Commerce</span>
+                        <h3 class="font-serif text-3xl mt-2">E-Commerce Website</h3>
+                    </div>
+                    <div class="mb-8 pb-8 border-b border-gray-100">
+                        <span class="font-serif text-4xl text-classic-black">₹21,999</span>
+                    </div>
+                    <ul class="space-y-4 mb-10 flex-grow font-light text-gray-500 text-sm">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Full e-commerce
+                            website</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Modern UI/UX
+                            design</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Advanced
+                            animations & smooth transitions</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Fully mobile
+                            responsive</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Personal domain &
+                            hosting included</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Product pages &
+                            basic e-commerce setup</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Free One Month
+                            Maintanance</li>
+
+                    </ul>
+                    <a href="#contact"
+                        class="block w-full py-4 text-center border border-gray-200 text-classic-black font-medium btn-classic uppercase text-xs tracking-widest">Select
+                        Plan</a>
+                </div>
+
+                <!-- Plan 4: Premium E-Commerce Website -->
+                <div
+                    class="price-card w-full md:w-[45%] lg:w-[30%] bg-white border border-gray-100 p-10 flex flex-col opacity-0 scroll-anim">
+                    <div class="mb-6">
+                        <span class="font-sans text-xs font-bold uppercase tracking-widest text-gray-400">Premium</span>
+                        <h3 class="font-serif text-3xl mt-2">Premium E-Commerce</h3>
+                    </div>
+                    <div class="mb-8 pb-8 border-b border-gray-100">
+                        <span class="font-serif text-4xl text-classic-black">Custom</span>
+                    </div>
+                    <ul class="space-y-4 mb-10 flex-grow font-light text-gray-500 text-sm">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Premium e-commerce
+                            website</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> High-end modern
+                            UI/UX</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Advanced
+                            animations & premium effects</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Fully mobile
+                            responsive</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Personal domain &
+                            hosting included</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Complete
+                            e-commerce functionality</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Free One Month
+                            Maintanance</li>
+
+                    </ul>
+                    <a href="#contact"
+                        class="block w-full py-4 text-center border border-gray-200 text-classic-black font-medium btn-classic uppercase text-xs tracking-widest">Contact
+                        Sales</a>
+                </div>
+
+                <!-- Plan 5: Special Theme Website -->
+                <div
+                    class="price-card w-full md:w-[45%] lg:w-[30%] bg-white border border-gray-100 p-10 flex flex-col opacity-0 scroll-anim">
+                    <div class="premium-badge">Premium</div>
+                    <div class="mb-6">
+                        <span class="font-sans text-xs font-bold uppercase tracking-widest text-gray-400">Special</span>
+                        <h3 class="font-serif text-3xl mt-2">Special Theme Website</h3>
+                    </div>
+                    <div class="mb-8 pb-8 border-b border-gray-100">
+                        <span class="font-serif text-4xl text-classic-black">₹24,999</span>
+                    </div>
+                    <ul class="space-y-4 mb-10 flex-grow font-light text-gray-500 text-sm">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Website with
+                            festival themes</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Modern UI/UX</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Advanced
+                            animations</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Mobile responsive
+                        </li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Personal domain &
+                            hosting</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Automatic theme
+                            change (date-based)</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Auto revert to
+                            default theme</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Free One Month
+                            Maintanance</li>
+
+                    </ul>
+                    <a href="#contact"
+                        class="block w-full py-4 text-center border border-gray-200 text-classic-black font-medium btn-classic uppercase text-xs tracking-widest">Select
+                        Plan</a>
+                </div>
+
+                <!-- Plan 6: Enterprise / Premium Pro -->
+                <div
+                    class="price-card featured w-full md:w-[45%] lg:w-[30%] border border-classic-black p-10 flex flex-col shadow-2xl relative opacity-0 scroll-anim">
+                    <div
+                        class="absolute top-0 right-0 bg-classic-gold text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1">
+                        Most Popular</div>
+                    <div class="mb-6">
+                        <span class="font-sans text-xs font-bold uppercase tracking-widest opacity-60">Enterprise</span>
+                        <h3 class="font-serif text-3xl mt-2">Enterprise / Premium Pro</h3>
                     </div>
                     <div class="mb-8 pb-8 border-b border-gray-700">
-                        <span class="font-serif text-4xl">$7,500</span>
-                        <span class="font-sans text-sm opacity-60">/mo</span>
+                        <span class="font-serif text-4xl">₹49,999+</span>
+                        <span class="font-sans text-sm opacity-60">(Depends on features)</span>
                     </div>
                     <ul class="space-y-4 mb-10 flex-grow font-light opacity-80 text-sm">
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i> Unlimited Requests</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i> Full-Stack Dev</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i> Brand Strategy</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i> Dedicated Manager</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Best for large businesses & serious brands</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Fully custom website or e-commerce platform</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Ultra-premium UI/UX (brand-focused design)</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            High-end animations & smooth transitions</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Fully responsive (mobile, tablet, desktop)</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Personal domain & premium hosting included</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Advanced SEO optimization</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Admin dashboard / CMS access</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Payment gateway integration (for e-commerce)</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            Security & performance optimization</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs text-classic-gold"></i>
+                            1 month free maintenance & support</li>
                     </ul>
-                    <a href="#contact" class="block w-full py-4 text-center border border-white bg-white text-classic-black font-medium btn-classic uppercase text-xs tracking-widest">Select Plan</a>
+                    <a href="#contact"
+                        class="block w-full py-4 text-center border border-white bg-white text-classic-black font-medium btn-classic uppercase text-xs tracking-widest">Select
+                        Plan</a>
                 </div>
 
-                <!-- Plan 4: Enterprise -->
-                <div class="price-card w-full md:w-[45%] lg:w-[30%] bg-white border border-gray-100 p-10 flex flex-col opacity-0 scroll-anim">
+                <!-- Plan 7: Special Theme PRO (Backend Control) -->
+                <div
+                    class="price-card w-full md:w-[45%] lg:w-[30%] bg-white border border-gray-100 p-10 flex flex-col opacity-0 scroll-anim">
+                    <div class="premium-badge">Premium</div>
                     <div class="mb-6">
-                        <span class="font-sans text-xs font-bold uppercase tracking-widest text-gray-400">Corporate</span>
-                        <h3 class="font-serif text-3xl mt-2">Enterprise</h3>
+                        <span class="font-sans text-xs font-bold uppercase tracking-widest text-gray-400">Special</span>
+                        <h3 class="font-serif text-3xl mt-2">Special Theme PRO (Backend Control)</h3>
                     </div>
                     <div class="mb-8 pb-8 border-b border-gray-100">
-                        <span class="font-serif text-4xl text-classic-black">$12k+</span>
-                        <span class="font-sans text-sm text-gray-400">/mo</span>
+                        <span class="font-serif text-4xl text-classic-black">₹34,999</span>
                     </div>
                     <ul class="space-y-4 mb-10 flex-grow font-light text-gray-500 text-sm">
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Multiple Teams</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Custom Workflows</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> SLA Guarantee</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> 24/7 Priority</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Website /
+                            E-commerce</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Premium modern
+                            UI/UX</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Advanced
+                            animations</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Mobile responsive
+                        </li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Personal domain &
+                            hosting</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Automatic festival
+                            & event themes</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Add / update
+                            themes directly from backend</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> No frontend code
+                            changes required</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Auto start & end
+                            date system</li>
                     </ul>
-                    <a href="#contact" class="block w-full py-4 text-center border border-gray-200 text-classic-black font-medium btn-classic uppercase text-xs tracking-widest">Contact Sales</a>
-                </div>
-
-                <!-- Plan 5: Retainer -->
-                <div class="price-card w-full md:w-[45%] lg:w-[30%] bg-white border border-gray-100 p-10 flex flex-col opacity-0 scroll-anim">
-                    <div class="mb-6">
-                        <span class="font-sans text-xs font-bold uppercase tracking-widest text-gray-400">Maintenance</span>
-                        <h3 class="font-serif text-3xl mt-2">Retainer</h3>
-                    </div>
-                    <div class="mb-8 pb-8 border-b border-gray-100">
-                        <span class="font-serif text-4xl text-classic-black">$1,200</span>
-                        <span class="font-sans text-sm text-gray-400">/mo</span>
-                    </div>
-                    <ul class="space-y-4 mb-10 flex-grow font-light text-gray-500 text-sm">
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Monthly Audits</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Security Updates</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Minor Edits</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-xs"></i> Hosting Included</li>
-                    </ul>
-                    <a href="#contact" class="block w-full py-4 text-center border border-gray-200 text-classic-black font-medium btn-classic uppercase text-xs tracking-widest">Select Plan</a>
+                    <a href="#contact"
+                        class="block w-full py-4 text-center border border-gray-200 text-classic-black font-medium btn-classic uppercase text-xs tracking-widest">Select
+                        Plan</a>
                 </div>
 
             </div>
@@ -345,53 +697,67 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
                 <div>
                     <h4 class="font-serif text-xl mb-3">Is there a minimum commitment?</h4>
-                    <p class="font-sans text-sm text-gray-500 font-light leading-relaxed">We request a 3-month initial commitment to ensure we can deliver substantial value and integrate fully with your team's workflow.</p>
+                    <p class="font-sans text-sm text-gray-500 font-light leading-relaxed">We request a 3-month initial
+                        commitment to ensure we can deliver substantial value and integrate fully with your team's
+                        workflow.</p>
                 </div>
                 <div>
                     <h4 class="font-serif text-xl mb-3">Can I pause my membership?</h4>
-                    <p class="font-sans text-sm text-gray-500 font-light leading-relaxed">Yes. We understand business fluctuates. You can pause your subscription for up to 3 months once every calendar year.</p>
+                    <p class="font-sans text-sm text-gray-500 font-light leading-relaxed">Yes. We understand business
+                        fluctuates. You can pause your subscription for up to 3 months once every calendar year.</p>
                 </div>
                 <div>
                     <h4 class="font-serif text-xl mb-3">What constitutes a "request"?</h4>
-                    <p class="font-sans text-sm text-gray-500 font-light leading-relaxed">A request is any single task that can be defined in a brief. For example: "Design a landing page" or "Implement a CMS feature".</p>
+                    <p class="font-sans text-sm text-gray-500 font-light leading-relaxed">A request is any single task
+                        that can be defined in a brief. For example: "Design a landing page" or "Implement a CMS
+                        feature".</p>
                 </div>
                 <div>
                     <h4 class="font-serif text-xl mb-3">Do you offer refunds?</h4>
-                    <p class="font-sans text-sm text-gray-500 font-light leading-relaxed">Due to the high-quality nature of our work, we do not offer refunds. However, we iterate on designs until you are completely satisfied.</p>
+                    <p class="font-sans text-sm text-gray-500 font-light leading-relaxed">Due to the high-quality nature
+                        of our work, we do not offer refunds. However, we iterate on designs until you are completely
+                        satisfied.</p>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- FOOTER -->
-  <footer id="contact" class="bg-classic-gray pt-24 pb-10 relative z-10 border-t border-gray-100">
+<!-- FOOTER -->
+    <footer id="contact" class="bg-classic-gray pt-16 md:pt-24 pb-10 relative z-10 border-t border-gray-100">
         <div class="container mx-auto px-6 lg:px-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mb-24">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 mb-16 md:mb-24">
                 <div>
-                    <h2 class="font-serif text-4xl md:text-5xl mb-6">Have a project<br>in mind?</h2>
+                    <h2 class="font-serif text-3xl md:text-5xl mb-6">Have a project<br>in mind?</h2>
                     <div class="flex flex-col items-start gap-4">
-                        <a href="mailto:hello@texnox.com" class="font-serif text-2xl text-gray-500 hover:text-black transition italic border-b border-gray-200 pb-1">
-                           texnox.co@gmail.com
+                        <a href="mailto:hello@texnox.com"
+                            class="font-serif text-lg md:text-2xl text-gray-500 hover:text-black transition italic border-b border-gray-200 pb-1">
+                            texnox.co@gmail.com
                         </a>
-                        <a href="tel:+15550123456" class="font-serif text-xl text-gray-400 hover:text-black transition">
+                        <a href="tel:+15550123456"
+                            class="font-serif text-lg md:text-xl text-gray-400 hover:text-black transition">
                             +91 9825576262
                         </a>
                     </div>
                 </div>
                 <div class="flex flex-col justify-end items-start md:items-end">
-                    <nav class="space-y-4 text-right mb-8">
+                    <nav class="space-y-4 text-left md:text-right mb-8 hidden md:block">
                         <a href="index.html" class="block text-gray-500 hover:text-black transition">Home</a>
                         <a href="demo.html" class="block text-gray-500 hover:text-black transition">Portfolio</a>
-                        <a href="#" class="block text-gray-500 hover:text-black transition">Contact</a>
+                        <a href="aboutus.html" class="block text-gray-500 hover:text-black transition">Contact</a>
                     </nav>
                     <div class="flex gap-6">
-                        <a href="#" class="text-gray-400 hover:text-classic-black transition text-xl"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-classic-black transition text-xl"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="https://www.instagram.com/texnox.co?igsh=bnR1YnM4aGo4MGli"
+                            class="text-gray-400 hover:text-classic-black transition text-xl"><i
+                                class="fa-brands fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/in/texnox-co-98308439a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                            class="text-gray-400 hover:text-classic-black transition text-xl"><i
+                                class="fa-brands fa-linkedin"></i></a>
+
                     </div>
                 </div>
             </div>
 
-            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400 font-sans tracking-wide">
+            <div
+                class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400 font-sans tracking-wide">
                 <p>&copy; 2024 Texnox Agency. All Rights Reserved.</p>
                 <div class="flex gap-6 mt-4 md:mt-0">
                     <a href="#" class="hover:text-black">Privacy</a>
@@ -400,8 +766,6 @@
             </div>
         </div>
     </footer>
-
-
     <!-- SCRIPT -->
     <script>
         // LOADER LOGIC
@@ -459,4 +823,5 @@
         }
     </script>
 </body>
+
 </html>

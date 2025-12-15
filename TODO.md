@@ -1,4 +1,0 @@
-- [ ] Add mobile menu HTML structure below the navbar
-- [x] Add CSS styles for the mobile menu
-- [x] Add JavaScript to toggle the mobile menu on button click
-- [x] Test mobile menu functionality (open/close, navigation)
