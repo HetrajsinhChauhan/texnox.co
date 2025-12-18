@@ -218,7 +218,7 @@
     </div>
 
     <!-- NAVBAR (Top) -->
-    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-all duration-300"
+    <nav class="fixed top-0 w-full z-50 border-b border-gray-100 transition-all duration-300"
         id="navbar">
         <div class="container mx-auto px-6 lg:px-12 h-16 md:h-20 flex justify-between items-center relative z-50">
 
@@ -276,8 +276,11 @@
 
 
     <!-- HERO SECTION -->
-    <header class="relative pt-32 pb-16 lg:pt-48 lg:pb-32 z-10" style="background-image: url('vecteezy_abstract-white-background-with-wavy-shapes-flowing-and_36340712.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-        <div class="container mx-auto px-6 lg:px-12 relative">
+    <header class="relative pt-32 pb-16 lg:pt-48 lg:pb-32 z-10 overflow-hidden">
+        <video class="absolute inset-0 w-full h-full object-cover" autoplay muted loop>
+            <source src="87789-602074264.mp4" type="video/mp4">
+        </video>
+        <div class="container mx-auto px-6 lg:px-12 relative z-10">
             <div class="max-w-4xl mx-auto text-start">
 
                 <p
@@ -298,7 +301,7 @@
                 </p>
 
                 <div class="opacity-0 hero-anim">
-                    <a href="#services"
+                    <a href="demo.html"
                         class="inline-flex items-start gap-3 text-classic-black font-medium btn-classic pb-1 text-sm md:text-base">
                         View Selected Works <i class="fa-solid fa-arrow-right text-xs"></i>
                     </a>
@@ -641,6 +644,16 @@
                 this.classList.remove('text-gray-400');
                 this.classList.add('active', 'text-classic-black');
             });
+        });
+
+        // Navbar transparency on scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-white/90', 'backdrop-blur-md');
+            } else {
+                navbar.classList.remove('bg-white/90', 'backdrop-blur-md');
+            }
         });
     </script>
 </body>
