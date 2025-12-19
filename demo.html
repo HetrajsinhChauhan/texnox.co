@@ -10,9 +10,9 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Fonts: Playfair Display (Classic Serif) & Inter (Modern Sans) -->
+    <!-- Fonts: Outfit (Modern Geometric) & Inter (Clean Sans) -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
     <!-- FontAwesome -->
@@ -28,43 +28,124 @@
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
+                        serif: ['Outfit', 'sans-serif'],
                     },
                     colors: {
+                        // Noir Palette
+                        black: '#0b0909',
+                        ebony: '#44444c',
+                        gray: '#8c8c8c',
+                        pewter: '#d6d6d6',
+                        white: '#ffffff',
+
+                        // Mappings
                         classic: {
-                            black: '#1a1a1a',
-                            charcoal: '#333333',
-                            gray: '#f9f9fa',
-                            accent: '#d4d4d8',
+                            black: '#ffffff',
+                            charcoal: '#d6d6d6',
+                            gray: '#0b0909',
+                            accent: '#44444c',
                         }
                     },
                     animation: {
                         'fade-in': 'fadeIn 1s ease-out',
                     },
-                    keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(10px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
-                    }
                 }
             }
         }
     </script>
 
     <style>
-        body {
-            background-color: #ffffff;
-            color: #1a1a1a;
-            overflow-x: hidden;
-            position: relative;
+        /* --- THEME OVERRIDES & GLOBAL RESETS --- */
+        :root {
+            --bg-main: #0b0909;
+            --bg-secondary: #0f0f0f;
+            --text-main: #d6d6d6;
+            --text-heading: #ffffff;
+            --border-color: #333333;
+            --accent: #44444c;
         }
 
-        /* --- BUTTONS --- */
+        html {
+            cursor: auto;
+        }
+
+        body {
+            background-color: var(--bg-main) !important;
+            color: var(--text-main) !important;
+            overflow-x: hidden;
+        }
+
+        /* --- CINEMATIC GRAIN OVERLAY --- */
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9997;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- TRAIL PARTICLES --- */
+        .trail-particle {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 3px;
+            background-color: #ffffff;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+        }
+
+        /* --- CLICK PARTICLES --- */
+        .cursor-particle {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 4px;
+            background-color: #d6d6d6;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0;
+        }
+
+        /* Override White/Gray Backgrounds */
+        .bg-white,
+        .bg-gray-50 {
+            background-color: var(--bg-main) !important;
+            color: var(--text-main) !important;
+        }
+
+        /* Text Color Overrides */
+        .text-classic-black {
+            color: var(--text-heading) !important;
+        }
+
+        .text-gray-400,
+        .text-gray-500,
+        .text-gray-600 {
+            color: #8c8c8c !important;
+        }
+
+        /* Border Overrides */
+        .border-gray-100,
+        .border-gray-50,
+        .border-gray-200,
+        .border-black {
+            border-color: var(--border-color) !important;
+        }
+
+        /* --- BUTTON STYLES --- */
         .btn-classic {
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
+            color: #ffffff !important;
         }
 
         .btn-classic::after {
@@ -74,7 +155,7 @@
             left: 0;
             width: 100%;
             height: 1px;
-            background-color: currentColor;
+            background-color: #ffffff !important;
             transform: scaleX(0);
             transform-origin: right;
             transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1);
@@ -87,20 +168,40 @@
 
         /* --- DEMO CARD --- */
         .demo-card {
-            transition: transform 0.5s ease;
+            transition: transform 0.1s ease;
+            /* Faster for tilt */
+            perspective: 1000px;
+            transform-style: preserve-3d;
         }
 
-        .demo-card:hover {
-            transform: translateY(-8px);
+        .demo-img-container {
+            border: 1px solid var(--border-color);
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+        }
+
+        .demo-card:hover .demo-img-container {
+            border-color: rgba(214, 214, 214, 0.4);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8);
         }
 
         .demo-overlay {
             opacity: 0;
             transition: opacity 0.4s ease;
+            background-color: rgba(11, 9, 9, 0.85) !important;
+            /* Dark overlay */
+            backdrop-filter: blur(4px);
         }
 
         .demo-card:hover .demo-overlay {
             opacity: 1;
+        }
+
+        /* Active Filter State */
+        .filter-active {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            border-bottom: 1px solid #ffffff !important;
         }
 
         /* --- SHAPES --- */
@@ -108,6 +209,11 @@
             position: absolute;
             z-index: 0;
             pointer-events: none;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        .shape-filled {
+            background-color: rgba(255, 255, 255, 0.03) !important;
         }
 
         .shape-circle {
@@ -119,33 +225,49 @@
             border: 1px solid rgba(0, 0, 0, 0.04);
         }
 
-        .shape-filled {
-            background-color: rgba(0, 0, 0, 0.02);
-            border: none;
+        /* --- LOADER --- */
+        #loader {
+            background-color: #0b0909 !important;
         }
 
-        /* --- LOADER ANIMATION --- */
+        #loader span {
+            color: #ffffff !important;
+        }
+
         .loader-line {
-            animation: loadLine 1.5s ease-in-out infinite;
+            background-color: #d6d6d6 !important;
         }
 
-        @keyframes loadLine {
-            0% {
-                transform: translateX(-100%);
-            }
+        #loader div.bg-gray-100 {
+            background-color: #333 !important;
+        }
 
-            50% {
-                transform: translateX(0);
-            }
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
 
-            100% {
-                transform: translateX(100%);
+        ::-webkit-scrollbar-track {
+            background: #0b0909;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #44444c;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .trail-particle {
+                display: none;
             }
         }
     </style>
 </head>
 
 <body class="antialiased selection:bg-gray-200 selection:text-black">
+
+    <!-- CINEMATIC GRAIN -->
+    <div class="grain-overlay"></div>
 
     <!-- LOADER -->
     <div id="loader"
@@ -160,82 +282,95 @@
         </div>
     </div>
 
-    <!-- BACKGROUND SHAPES -->
-    <div class="fixed inset-0 overflow-hidden pointer-events-none">
-        <div class="classic-shape shape-circle w-[500px] h-[500px] top-[-10%] right-[-10%] shape-anim"></div>
-        <div class="classic-shape shape-square w-64 h-64 bottom-[10%] left-[-5%] shape-anim delay-200"></div>
-        <div class="classic-shape shape-circle shape-filled w-32 h-32 top-[30%] left-[20%] shape-anim delay-500"></div>
-    </div>
-
-    <!-- NAVBAR (Top) -->
-    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-all duration-300"
+    <!-- NAVBAR (Floating & Adaptive) -->
+    <nav class="fixed top-0 left-1/2 -translate-x-1/2 w-full z-50 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] text-pewter"
         id="navbar">
-        <div class="container mx-auto px-6 lg:px-12 h-16 md:h-20 flex justify-between items-center relative z-50">
+        <div class="h-16 md:h-20 flex justify-between items-center px-6 lg:px-12 w-full">
 
             <!-- Logo -->
-            <a href="#" class="font-serif font-bold text-2xl tracking-tight text-classic-black">
+            <a href="#"
+                class="font-serif font-bold text-2xl tracking-tight text-white hover:text-pewter transition-colors interactable magnetic">
                 Texnox.
             </a>
 
             <!-- Menu (Desktop) -->
-            <div class="hidden md:flex items-center gap-10 font-sans text-sm font-medium text-gray-500 tracking-wide">
-                <a href="index.html" class="hover:text-black transition-colors">Home</a>
-                <a href="demo.html" class="hover:text-black transition-colors">Demo</a>
-                <a href="plans.html" class="hover:text-black transition-colors">Plans</a>
-                <a href="aboutus.html" class="hover:text-black transition-colors">About</a>
-                <a href="Howwework.html" class="hover:text-black transition-colors">How we Work</a>
+            <div class="hidden md:flex items-center gap-10 font-sans text-sm font-medium tracking-wide opacity-90">
+                <a href="index.html"
+                    class="hover:opacity-100 hover:text-white transition-all interactable magnetic">Home</a>
+                <a href="demo.html"
+                    class="text-white border-b border-white opacity-100 transition-all interactable magnetic">Demo</a>
+                <a href="plans.html"
+                    class="hover:opacity-100 hover:text-white transition-all interactable magnetic">Plans</a>
+                <a href="aboutus.html"
+                    class="hover:opacity-100 hover:text-white transition-all interactable magnetic">About</a>
+                <a href="Howwework.html"
+                    class="hover:opacity-100 hover:text-white transition-all interactable magnetic">How we Work</a>
             </div>
 
             <!-- CTA (Desktop Only) -->
             <div class="hidden md:block">
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLScEjtXoZ86KljP-ulFYZBaUaOu0nf7lczK6e7ZcNxssoeyWkg/viewform?usp=dialog"
-                    class="px-6 py-3 bg-classic-black text-white text-sm font-medium hover:bg-gray-800 transition shadow-lg shadow-gray-200 rounded-sm">
+                    class="px-6 py-3 bg-pewter text-black text-sm font-bold hover:bg-white hover:text-black transition-colors duration-300 shadow-lg shadow-gray/10 rounded-full interactable magnetic"
+                    id="nav-cta">
                     Get in Touch
                 </a>
             </div>
 
-            <!-- Mobile Menu Button (Hamburger - visible on mobile but we'll prioritize bottom nav) -->
-            <button onclick="toggleMenu()" id="mobile-menu-btn" class="md:hidden text-classic-black text-xl p-2"
+            <!-- Mobile Menu Button -->
+            <button onclick="toggleMenu()" id="mobile-menu-btn"
+                class="md:hidden text-2xl p-2 focus:outline-none hover:text-white transition-colors interactable text-white"
                 title="Toggle menu">
                 <i class="fa-solid fa-bars"></i>
             </button>
-
-        </div>
-
-        <!-- Mobile Menu (Drop down style) -->
-        <div id="mobile-menu"
-            class="md:hidden fixed top-[64px] left-0 w-full bg-white/95 backdrop-blur-xl border-b border-gray-100 transform -translate-y-[150%] transition-transform duration-300 ease-in-out z-40 shadow-xl">
-            <div class="container mx-auto px-6 py-8">
-                <div class="flex flex-col gap-6 font-sans text-lg font-medium text-gray-600 tracking-wide text-center">
-                    <a href="index.html" class="hover:text-black transition-colors py-2 border-b border-gray-50"
-                        onclick="toggleMenu()">Home</a>
-                    <a href="#services" class="hover:text-black transition-colors py-2 border-b border-gray-50"
-                        onclick="toggleMenu()">Services</a>
-                    <a href="plans.html" class="hover:text-black transition-colors py-2 border-b border-gray-50"
-                        onclick="toggleMenu()">Pricing</a>
-                    <a href="aboutus.html" class="hover:text-black transition-colors py-2 border-b border-gray-50"
-                        onclick="toggleMenu()">About</a>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScEjtXoZ86KljP-ulFYZBaUaOu0nf7lczK6e7ZcNxssoeyWkg/viewform?usp=dialog"
-                        class="px-6 py-4 mt-4 bg-classic-black text-white text-sm font-medium hover:bg-gray-800 transition shadow-lg rounded-sm inline-block w-full">
-                        Get in Touch
-                    </a>
-                </div>
-            </div>
         </div>
     </nav>
 
-    <!-- HERO -->
-    <header class="relative pt-32 pb-16 lg:pt-48 lg:pb-24 bg-white z-10">
-        <div class="container mx-auto px-6 lg:px-12 text-center">
+    <!-- Full Screen Mobile Menu Overlay -->
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-black/95 backdrop-blur-xl z-40 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="flex flex-col gap-8 font-sans text-2xl font-light text-pewter tracking-wide text-center">
+            <a href="index.html" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">Home</a>
+            <a href="demo.html" class="text-white hover:scale-110 transition-all" onclick="toggleMenu()">Demo</a>
+            <a href="plans.html" class="hover:text-white hover:scale-110 transition-all"
+                onclick="toggleMenu()">Plans</a>
+            <a href="aboutus.html" class="hover:text-white hover:scale-110 transition-all"
+                onclick="toggleMenu()">About</a>
+            <a href="Howwework.html" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">How
+                we Work</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScEjtXoZ86KljP-ulFYZBaUaOu0nf7lczK6e7ZcNxssoeyWkg/viewform?usp=dialog"
+                class="px-8 py-4 mt-4 bg-pewter text-black text-lg font-bold rounded-full hover:bg-white transition shadow-lg"
+                onclick="toggleMenu()">
+                Get in Touch
+            </a>
+        </div>
+    </div>
+
+    <!-- HERO SECTION WITH VIDEO BACKGROUND -->
+    <header class="relative pt-32 pb-32 lg:pt-48 lg:pb-40 bg-black z-10 overflow-hidden">
+        <!-- SEO Optimized Background Video -->
+        <div class="absolute inset-0 w-full h-full overflow-hidden z-0">
+            <!-- Poster image loads immediately for SEO/LCP. Video loads lazily or immediately depending on bandwidth -->
+            <video class="absolute inset-0 w-full h-full object-cover opacity-40 grayscale" autoplay muted loop
+                playsinline poster="https://images.pexels.com/videos/3130182/pictures/preview-0.jpg">
+                <source src="https://videos.pexels.com/video-files/3130182/3130182-hd_1920_1080_30fps.mp4"
+                    type="video/mp4">
+            </video>
+            <!-- Gradient Overlay for Accessibility (Text Contrast) -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/40 pointer-events-none">
+            </div>
+        </div>
+
+        <div class="container mx-auto px-6 lg:px-12 text-center relative z-10">
             <p
                 class="font-sans text-xs font-semibold tracking-[0.2em] text-gray-400 uppercase mb-6 opacity-0 hero-anim">
                 Portfolio Showcase
             </p>
             <h1
-                class="font-serif text-4xl md:text-6xl lg:text-7xl text-classic-black leading-tight mb-8 opacity-0 hero-anim">
-                Design <span class="italic font-light text-gray-600">Library.</span>
+                class="font-serif text-4xl md:text-6xl lg:text-7xl text-white leading-tight mb-8 opacity-0 hero-anim drop-shadow-lg">
+                Design <span class="italic font-light text-pewter">Library.</span>
             </h1>
-            <p class="font-sans text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed opacity-0 hero-anim font-light">
+            <p
+                class="font-sans text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed opacity-0 hero-anim font-light drop-shadow-md">
                 Explore our collection of handcrafted digital experiences. Each project is a testament to precision and
                 timeless aesthetics.
             </p>
@@ -243,14 +378,19 @@
     </header>
 
     <!-- FILTERS -->
-    <section class="pb-16 bg-white relative z-10">
+    <section class="pb-16 bg-white relative z-10 pt-16">
         <div class="container mx-auto px-6 lg:px-12">
-            <div class="flex flex-wrap justify-center gap-8 font-sans text-sm tracking-widest uppercase text-gray-400">
-                <button class="text-classic-black font-bold border-b border-black pb-1">All Work</button>
-                <button class="hover:text-classic-black transition pb-1">E-Commerce</button>
-                <button class="hover:text-classic-black transition pb-1">Corporate</button>
-                <button class="hover:text-classic-black transition pb-1">Creative</button>
-                <button class="hover:text-classic-black transition pb-1">SaaS</button>
+            <div class="flex flex-wrap justify-center gap-8 font-sans text-sm tracking-widest uppercase text-gray-400"
+                id="filter-container">
+                <button class="filter-btn filter-active interactable magnetic" data-filter="all">All Work</button>
+                <button class="filter-btn hover:text-white transition pb-1 interactable magnetic"
+                    data-filter="ecommerce">E-Commerce</button>
+                <button class="filter-btn hover:text-white transition pb-1 interactable magnetic"
+                    data-filter="corporate">Corporate</button>
+                <button class="filter-btn hover:text-white transition pb-1 interactable magnetic"
+                    data-filter="creative">Creative</button>
+                <button class="filter-btn hover:text-white transition pb-1 interactable magnetic"
+                    data-filter="saas">SaaS</button>
             </div>
         </div>
     </section>
@@ -258,138 +398,190 @@
     <!-- DEMO GRID -->
     <section class="pb-32 bg-white relative z-10">
         <div class="container mx-auto px-6 lg:px-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12" id="demo-grid">
 
-                <!-- Demo Item 1 -->
-                <div class="demo-card group cursor-pointer opacity-0 scroll-anim">
-                    <div class="relative overflow-hidden rounded-sm shadow-md bg-gray-50 aspect-[4/3] mb-6">
-                        <img src="imgs/sipso.png" class="w-full h-full object-cover" alt="Demo 5">
-                        <div class="demo-overlay absolute inset-0 bg-white/90 flex items-center justify-center gap-4">
+                <!-- Demo Item 1: Creative -->
+                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card"
+                    data-category="creative">
+                    <div class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6">
+                        <img src="imgs/sipso.png"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Sipso Cafe">
+                        <div class="demo-overlay absolute inset-0 flex items-center justify-center gap-4">
                             <a href="https://texnoxsipso.vercel.app/"
-                                class="w-12 h-12 rounded-full border border-classic-black flex items-center justify-center hover:bg-classic-black hover:text-white transition cursor-pointer">
-                                <i class="fa-solid fa-eye"></i>
+                                class="px-6 py-3 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-full hover:bg-pewter transition-colors duration-300 shadow-lg flex items-center gap-2 interactable magnetic">
+                                <span>View Live</span>
+                                <i class="fa-solid fa-arrow-right"></i>
                             </a>
-
                         </div>
                     </div>
-                    <div class="flex justify-between items-baseline pr-2">
-                        <h3 class="font-serif text-2xl text-classic-black group-hover:text-gray-600 transition">
-                            Sipso Cafe</h3>
+                    <div class="flex justify-between items-center pr-2">
+                        <div class="flex items-center gap-3">
+                            <h3 class="font-serif text-2xl text-white group-hover:text-pewter transition">Sipso Cafe
+                            </h3>
+                            <a href="https://texnoxsipso.vercel.app/"
+                                class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-gray hover:text-black hover:bg-white hover:border-white transition-all duration-300 interactable magnetic"
+                                title="View Project">
+                                <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
+                            </a>
+                        </div>
                         <span class="text-xs font-bold font-sans text-gray-400 uppercase tracking-widest">Cafe</span>
                     </div>
                 </div>
 
-                <!-- Demo Item 2 -->
-                <div class="demo-card group cursor-pointer opacity-0 scroll-anim">
-                    <div class="relative overflow-hidden rounded-sm shadow-md bg-gray-50 aspect-[4/3] mb-6">
-                        <img src="imgs/bloom&basket.png" class="w-full h-full object-cover" alt="Demo 2">
-                        <div class="demo-overlay absolute inset-0 bg-white/90 flex items-center justify-center gap-4">
+                <!-- Demo Item 2: E-Commerce -->
+                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card"
+                    data-category="ecommerce">
+                    <div class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6">
+                        <img src="imgs/bloom&basket.png"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Bloom & Basket">
+                        <div class="demo-overlay absolute inset-0 flex items-center justify-center gap-4">
                             <a href="https://bloombytexnox.vercel.app/"
-                                class="w-12 h-12 rounded-full border border-classic-black flex items-center justify-center hover:bg-classic-black hover:text-white transition cursor-pointer">
-                                <i class="fa-solid fa-eye"></i>
+                                class="px-6 py-3 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-full hover:bg-pewter transition-colors duration-300 shadow-lg flex items-center gap-2 interactable magnetic">
+                                <span>View Live</span>
+                                <i class="fa-solid fa-arrow-right"></i>
                             </a>
-
                         </div>
                     </div>
-                    <div class="flex justify-between items-baseline pr-2">
-                        <h3 class="font-serif text-2xl text-classic-black group-hover:text-gray-600 transition">Bloom &
-                            Basket</h3>
+                    <div class="flex justify-between items-center pr-2">
+                        <div class="flex items-center gap-3">
+                            <h3 class="font-serif text-2xl text-white group-hover:text-pewter transition">Bloom & Basket
+                            </h3>
+                            <a href="https://bloombytexnox.vercel.app/"
+                                class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-gray hover:text-black hover:bg-white hover:border-white transition-all duration-300 interactable magnetic"
+                                title="View Project">
+                                <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
+                            </a>
+                        </div>
                         <span class="text-xs font-bold font-sans text-gray-400 uppercase tracking-widest">Mini
                             Inventry</span>
                     </div>
                 </div>
 
-                <!-- Demo Item 3 -->
-                <div class="demo-card group cursor-pointer opacity-0 scroll-anim">
-                    <div class="relative overflow-hidden rounded-sm shadow-md bg-gray-50 aspect-[4/3] mb-6">
-                        <img src="imgs/Brewly.png" class="w-full h-full object-cover" alt="Demo 3">
-                        <div class="demo-overlay absolute inset-0 bg-white/90 flex items-center justify-center gap-4">
+                <!-- Demo Item 3: Creative -->
+                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card"
+                    data-category="creative">
+                    <div class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6">
+                        <img src="imgs/Brewly.png"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Brewly Cafe">
+                        <div class="demo-overlay absolute inset-0 flex items-center justify-center gap-4">
                             <a href="https://brewlybytexnox.vercel.app/"
-                                class="w-12 h-12 rounded-full border border-classic-black flex items-center justify-center hover:bg-classic-black hover:text-white transition cursor-pointer">
-                                <i class="fa-solid fa-eye"></i>
+                                class="px-6 py-3 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-full hover:bg-pewter transition-colors duration-300 shadow-lg flex items-center gap-2 interactable magnetic">
+                                <span>View Live</span>
+                                <i class="fa-solid fa-arrow-right"></i>
                             </a>
-
                         </div>
                     </div>
-                    <div class="flex justify-between items-baseline pr-2">
-                        <h3 class="font-serif text-2xl text-classic-black group-hover:text-gray-600 transition">Brewly
-                            Cafe</h3>
+                    <div class="flex justify-between items-center pr-2">
+                        <div class="flex items-center gap-3">
+                            <h3 class="font-serif text-2xl text-white group-hover:text-pewter transition">Brewly Cafe
+                            </h3>
+                            <a href="https://brewlybytexnox.vercel.app/"
+                                class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-gray hover:text-black hover:bg-white hover:border-white transition-all duration-300 interactable magnetic"
+                                title="View Project">
+                                <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
+                            </a>
+                        </div>
                         <span class="text-xs font-bold font-sans text-gray-400 uppercase tracking-widest">Cafe</span>
                     </div>
                 </div>
 
-                <!-- Demo Item 4 -->
-                <div class="demo-card group cursor-pointer opacity-0 scroll-anim">
-                    <div class="relative overflow-hidden rounded-sm shadow-md bg-gray-50 aspect-[4/3] mb-6">
-                        <img src="imgs/boost.png" class="w-full h-full object-cover" alt="Demo 4">
-                        <div class="demo-overlay absolute inset-0 bg-white/90 flex items-center justify-center gap-4">
+                <!-- Demo Item 4: Corporate / SaaS -->
+                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card"
+                    data-category="corporate saas">
+                    <div class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6">
+                        <img src="imgs/boost.png"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Boost">
+                        <div class="demo-overlay absolute inset-0 flex items-center justify-center gap-4">
                             <a href="https://boostbytexnox.vercel.app/"
-                                class="w-12 h-12 rounded-full border border-classic-black flex items-center justify-center hover:bg-classic-black hover:text-white transition cursor-pointer">
-                                <i class="fa-solid fa-eye"></i>
+                                class="px-6 py-3 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-full hover:bg-pewter transition-colors duration-300 shadow-lg flex items-center gap-2 interactable magnetic">
+                                <span>View Live</span>
+                                <i class="fa-solid fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
-                    <div class="flex justify-between items-baseline pr-2">
-                        <h3 class="font-serif text-2xl text-classic-black group-hover:text-gray-600 transition">Boost
-                        </h3>
-                        <span class="text-xs font-bold font-sans text-gray-400 uppercase tracking-widest">Gym</span>
+                    <div class="flex justify-between items-center pr-2">
+                        <div class="flex items-center gap-3">
+                            <h3 class="font-serif text-2xl text-white group-hover:text-pewter transition">Boost</h3>
+                            <a href="https://boostbytexnox.vercel.app/"
+                                class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-gray hover:text-black hover:bg-white hover:border-white transition-all duration-300 interactable magnetic"
+                                title="View Project">
+                                <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
+                            </a>
+                        </div>
+                        <span class="text-xs font-bold font-sans text-gray-400 uppercase tracking-widest">Gym
+                            SaaS</span>
                     </div>
                 </div>
 
-                <!-- Demo Item 5 -->
-                <div class="demo-card group cursor-pointer opacity-0 scroll-anim">
-                    <div class="relative overflow-hidden rounded-sm shadow-md bg-gray-50 aspect-[4/3] mb-6">
-                        <img src="imgs/belamon.png" class="w-full h-full object-cover" alt="Demo 5">
-                        <div class="demo-overlay absolute inset-0 bg-white/90 flex items-center justify-center gap-4">
-                            <a href="https://bellamonbytexnox.vercel.app/       "
-                                class="w-12 h-12 rounded-full border border-classic-black flex items-center justify-center hover:bg-classic-black hover:text-white transition cursor-pointer">
-                                <i class="fa-solid fa-eye"></i>
+                <!-- Demo Item 5: E-Commerce -->
+                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card"
+                    data-category="ecommerce">
+                    <div class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6">
+                        <img src="imgs/belamon.png"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Belamon">
+                        <div class="demo-overlay absolute inset-0 flex items-center justify-center gap-4">
+                            <a href="https://bellamonbytexnox.vercel.app/"
+                                class="px-6 py-3 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-full hover:bg-pewter transition-colors duration-300 shadow-lg flex items-center gap-2 interactable magnetic">
+                                <span>View Live</span>
+                                <i class="fa-solid fa-arrow-right"></i>
                             </a>
-
                         </div>
                     </div>
-                    <div class="flex justify-between items-baseline pr-2">
-                        <h3 class="font-serif text-2xl text-classic-black group-hover:text-gray-600 transition">
-                            Bellamon</h3>
+                    <div class="flex justify-between items-center pr-2">
+                        <div class="flex items-center gap-3">
+                            <h3 class="font-serif text-2xl text-white group-hover:text-pewter transition">Belamon</h3>
+                            <a href="https://bellamonbytexnox.vercel.app/"
+                                class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-gray hover:text-black hover:bg-white hover:border-white transition-all duration-300 interactable magnetic"
+                                title="View Project">
+                                <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
+                            </a>
+                        </div>
                         <span class="text-xs font-bold font-sans text-gray-400 uppercase tracking-widest">Mini E
                             com</span>
                     </div>
                 </div>
 
-
             </div>
         </div>
     </section>
 
-<!-- FOOTER -->
-    <footer id="contact" class="bg-classic-gray pt-16 md:pt-24 pb-10 relative z-10 border-t border-gray-100">
+    <!-- FOOTER -->
+    <footer id="contact" class="bg-black pt-16 md:pt-24 pb-10 relative z-10 border-t border-gray-100">
         <div class="container mx-auto px-6 lg:px-12">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 mb-16 md:mb-24">
                 <div>
-                    <h2 class="font-serif text-3xl md:text-5xl mb-6">Have a project<br>in mind?</h2>
+                    <h2 class="font-serif text-3xl md:text-5xl mb-6 text-white">Have a project<br>in mind?</h2>
                     <div class="flex flex-col items-start gap-4">
                         <a href="mailto:hello@texnox.com"
-                            class="font-serif text-lg md:text-2xl text-gray-500 hover:text-black transition italic border-b border-gray-200 pb-1">
+                            class="font-serif text-lg md:text-2xl text-gray-500 hover:text-white transition italic border-b border-gray-200 pb-1 interactable magnetic">
                             texnox.co@gmail.com
                         </a>
                         <a href="tel:+15550123456"
-                            class="font-serif text-lg md:text-xl text-gray-400 hover:text-black transition">
+                            class="font-serif text-lg md:text-xl text-gray-400 hover:text-white transition interactable magnetic">
                             +91 9825576262
                         </a>
                     </div>
                 </div>
                 <div class="flex flex-col justify-end items-start md:items-end">
                     <nav class="space-y-4 text-left md:text-right mb-8 hidden md:block">
-                        <a href="index.html" class="block text-gray-500 hover:text-black transition">Home</a>
-                        <a href="demo.html" class="block text-gray-500 hover:text-black transition">Portfolio</a>
-                        <a href="aboutus.html" class="block text-gray-500 hover:text-black transition">Contact</a>
+                        <a href="index.html"
+                            class="block text-gray-500 hover:text-white transition interactable magnetic">Home</a>
+                        <a href="demo.html"
+                            class="block text-gray-500 hover:text-white transition interactable magnetic">Portfolio</a>
+                        <a href="aboutus.html"
+                            class="block text-gray-500 hover:text-white transition interactable magnetic">Contact</a>
                     </nav>
                     <div class="flex gap-6">
                         <a href="https://www.instagram.com/texnox.co?igsh=bnR1YnM4aGo4MGli"
-                            class="text-gray-400 hover:text-classic-black transition text-xl"><i
+                            class="text-gray-400 hover:text-white transition text-xl interactable magnetic"><i
                                 class="fa-brands fa-instagram"></i></a>
                         <a href="https://www.linkedin.com/in/texnox-co-98308439a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
-                            class="text-gray-400 hover:text-classic-black transition text-xl"><i
+                            class="text-gray-400 hover:text-white transition text-xl interactable magnetic"><i
                                 class="fa-brands fa-linkedin"></i></a>
 
                     </div>
@@ -400,29 +592,207 @@
                 class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400 font-sans tracking-wide">
                 <p>&copy; 2024 Texnox Agency. All Rights Reserved.</p>
                 <div class="flex gap-6 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-black">Privacy</a>
-                    <a href="#" class="hover:text-black">Terms</a>
+                    <a href="#" class="hover:text-white interactable magnetic">Privacy</a>
+                    <a href="#" class="hover:text-white interactable magnetic">Terms</a>
                 </div>
             </div>
         </div>
     </footer>
+
     <!-- SCRIPT -->
     <script>
-        // LOADER LOGIC
-        window.addEventListener('load', () => {
-            const loader = document.getElementById('loader');
-            setTimeout(() => {
-                loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                    initAnimations();
-                }, 700);
-            }, 600); // Loader visible time
+        // 1. GSAP INIT
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- PARTICLE TRAIL LOGIC (SPARKS) ---
+        let lastTrailX = 0;
+        let lastTrailY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+
+            const dist = Math.hypot(x - lastTrailX, y - lastTrailY);
+
+            if (dist > 8) {
+                createSparkTrail(x, y);
+                lastTrailX = x;
+                lastTrailY = y;
+            }
+        });
+
+        function createSparkTrail(x, y) {
+            const sparkCount = 2;
+            for (let i = 0; i < sparkCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('trail-particle');
+                document.body.appendChild(particle);
+
+                const offsetX = (Math.random() - 0.5) * 6;
+                const offsetY = (Math.random() - 0.5) * 6;
+
+                gsap.set(particle, {
+                    x: x + offsetX,
+                    y: y + offsetY,
+                    opacity: 1,
+                    scale: Math.random() * 0.6 + 0.4
+                });
+
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 15 + 5;
+                const destX = Math.cos(angle) * velocity;
+                const destY = Math.sin(angle) * velocity;
+
+                gsap.to(particle, {
+                    x: `+=${destX}`,
+                    y: `+=${destY}`,
+                    opacity: 0,
+                    scale: 0,
+                    duration: Math.random() * 0.4 + 0.2,
+                    ease: "power2.out",
+                    onComplete: () => particle.remove()
+                });
+            }
+        }
+
+        // --- CLICK PARTICLES ---
+        window.addEventListener('mousedown', (e) => {
+            createParticles(e.clientX, e.clientY);
+        });
+
+        function createParticles(x, y) {
+            const particleCount = 12;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('cursor-particle');
+                document.body.appendChild(particle);
+
+                gsap.set(particle, {
+                    x: x,
+                    y: y,
+                    opacity: 1,
+                    scale: 1
+                });
+
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 60 + 20;
+                const destX = Math.cos(angle) * velocity;
+                const destY = Math.sin(angle) * velocity;
+
+                gsap.to(particle, {
+                    x: `+=${destX}`,
+                    y: `+=${destY}`,
+                    opacity: 0,
+                    scale: 0,
+                    rotation: Math.random() * 360,
+                    duration: Math.random() * 0.6 + 0.4,
+                    ease: "power2.out",
+                    onComplete: () => particle.remove()
+                });
+            }
+        }
+
+        // --- MAGNETIC BUTTON EFFECT ---
+        const magnets = document.querySelectorAll('.magnetic');
+        magnets.forEach((magnet) => {
+            magnet.addEventListener('mousemove', (e) => {
+                const bounding = magnet.getBoundingClientRect();
+                const x = (e.clientX - bounding.left) - (bounding.width / 2);
+                const y = (e.clientY - bounding.top) - (bounding.height / 2);
+
+                gsap.to(magnet, {
+                    x: x * 0.3,
+                    y: y * 0.3,
+                    duration: 0.3,
+                    ease: "power3.out"
+                });
+            });
+
+            magnet.addEventListener('mouseleave', () => {
+                gsap.to(magnet, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "elastic.out(1, 0.3)"
+                });
+            });
+        });
+
+        // --- 3D TILT EFFECT FOR DEMO CARDS ---
+        const tiltCards = document.querySelectorAll('.tilt-card');
+        tiltCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((y - centerY) / centerY) * -5;
+                const rotateY = ((x - centerX) / centerX) * 5;
+
+                gsap.to(card, {
+                    rotationX: rotateX,
+                    rotationY: rotateY,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    transformPerspective: 1000,
+                    transformOrigin: "center center"
+                });
+            });
+
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, {
+                    rotationX: 0,
+                    rotationY: 0,
+                    duration: 0.8,
+                    ease: "elastic.out(1, 0.5)"
+                });
+            });
+        });
+
+        // --- FILTER LOGIC ---
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const demoCards = document.querySelectorAll('.demo-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all
+                filterBtns.forEach(b => b.classList.remove('filter-active'));
+                // Add active class to clicked
+                btn.classList.add('filter-active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                demoCards.forEach(card => {
+                    const categories = card.getAttribute('data-category');
+
+                    if (filterValue === 'all' || categories.includes(filterValue)) {
+                        gsap.to(card, {
+                            autoAlpha: 1,
+                            scale: 1,
+                            duration: 0.4,
+                            display: 'block',
+                            ease: "power2.out"
+                        });
+                    } else {
+                        gsap.to(card, {
+                            autoAlpha: 0,
+                            scale: 0.95,
+                            duration: 0.4,
+                            display: 'none',
+                            ease: "power2.in"
+                        });
+                    }
+                });
+
+                // Recalculate ScrollTrigger
+                setTimeout(() => ScrollTrigger.refresh(), 400);
+            });
         });
 
         function initAnimations() {
-            gsap.registerPlugin(ScrollTrigger);
-
             // Hero Text Fade In
             gsap.to('.hero-anim', {
                 y: 0,
@@ -462,6 +832,65 @@
                 stagger: { amount: 3, from: "random" }
             });
         }
+
+        // LOADER LOGIC
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    initAnimations();
+                }, 700);
+            }, 600); // Loader visible time
+        });
+
+        // --- ADAPTIVE FLOATING NAVBAR LOGIC ---
+        const navbar = document.getElementById('navbar');
+        const navCta = document.getElementById('nav-cta');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                // Floating State
+                navbar.classList.remove('w-full', 'top-0', 'border-transparent');
+                navbar.classList.add('w-[92%]', 'md:w-[85%]', 'top-6', 'rounded-2xl', 'bg-black/80', 'backdrop-blur-xl', 'border', 'border-ebony/50', 'shadow-2xl', 'shadow-black/50');
+
+                if (navCta) {
+                    navCta.classList.remove('bg-pewter', 'text-black');
+                    navCta.classList.add('bg-white', 'text-black');
+                }
+            } else {
+                // Top State
+                navbar.classList.add('w-full', 'top-0', 'border-transparent');
+                navbar.classList.remove('w-[92%]', 'md:w-[85%]', 'top-6', 'rounded-2xl', 'bg-black/80', 'backdrop-blur-xl', 'border', 'border-ebony/50', 'shadow-2xl', 'shadow-black/50');
+
+                if (navCta) {
+                    navCta.classList.add('bg-pewter', 'text-black');
+                    navCta.classList.remove('bg-white', 'text-black');
+                }
+            }
+        });
+
+        // --- MOBILE MENU LOGIC ---
+        let isMenuOpen = false;
+        window.toggleMenu = function () {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.getElementById('mobile-menu-btn');
+
+            isMenuOpen = !isMenuOpen;
+
+            if (isMenuOpen) {
+                menu.classList.remove('opacity-0', 'pointer-events-none');
+                menu.classList.add('opacity-100', 'pointer-events-auto');
+                btn.innerHTML = '<i class="fa-solid fa-times text-white"></i>';
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.remove('opacity-100', 'pointer-events-auto');
+                menu.classList.add('opacity-0', 'pointer-events-none');
+                btn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                document.body.style.overflow = '';
+            }
+        };
     </script>
 </body>
 

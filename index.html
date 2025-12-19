@@ -11,14 +11,14 @@
     <!-- Mobile App Capabilities -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#0b0909">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Fonts: Playfair Display (Classic Serif) & Inter (Modern Sans) -->
+    <!-- Fonts: Outfit (Modern Geometric) & Inter (Clean Sans) -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
     <!-- FontAwesome -->
@@ -34,27 +34,32 @@
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
+                        serif: ['Outfit', 'sans-serif'],
                     },
                     colors: {
-                        classic: {
-                            black: '#1a1a1a',
-                            charcoal: '#333333',
-                            gray: '#f9f9fa', // Lighter gray
-                            accent: '#d4d4d8',
-                        }
+                        // Noir Palette
+                        black: '#0b0909',    // Main Background
+                        ebony: '#44444c',    // Cards / Secondary BG Elements
+                        gray: '#8c8c8c',     // Subtext / Muted
+                        pewter: '#d6d6d6',   // Primary Text / Accents
+                        white: '#ffffff',
                     },
                     animation: {
                         'fade-in': 'fadeIn 1s ease-out',
+                        'marquee': 'marquee 25s linear infinite',
                     },
                     keyframes: {
                         fadeIn: {
                             '0%': { opacity: '0', transform: 'translateY(10px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
                         }
                     },
                     screens: {
-                        'xs': '375px', // Added for smaller phones
+                        'xs': '375px',
                     }
                 }
             }
@@ -66,36 +71,83 @@
         html {
             -webkit-tap-highlight-color: transparent;
             scroll-padding-top: 80px;
-            /* Offset for sticky header */
+            cursor: none;
+            /* Hide default cursor */
         }
 
         body {
-            background-color: #ffffff;
-            color: #1a1a1a;
+            background-color: #0b0909;
+            /* Black Background */
+            color: #d6d6d6;
+            /* Pewter Text */
             overflow-x: hidden;
             position: relative;
-            /* Extra padding bottom for mobile nav bar */
-            padding-bottom: 80px;
         }
 
-        @media (min-width: 768px) {
-            body {
-                padding-bottom: 0;
-            }
+        /* --- CINEMATIC GRAIN OVERLAY --- */
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9997;
+            /* Behind cursor, above content */
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Hide Scrollbar for cleaner app look */
+        /* --- TRAIL PARTICLES (SPARKS) --- */
+        .trail-particle {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 3px;
+            background-color: #ffffff;
+            pointer-events: none;
+            z-index: 9999;
+            border-radius: 0;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+        }
+
+        /* --- CLICK PARTICLES --- */
+        .cursor-particle {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 4px;
+            background-color: #d6d6d6;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0;
+            border-radius: 0;
+        }
+
+        /* Hide Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
         }
 
         ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: #0b0909;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #d4d4d8;
+            background: #44444c;
             border-radius: 3px;
+        }
+
+        /* --- 3D TILT CARDS --- */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+        }
+
+        .tilt-inner {
+            transform: translateZ(20px);
         }
 
         /* --- BUTTON STYLES --- */
@@ -112,7 +164,8 @@
             left: 0;
             width: 100%;
             height: 1px;
-            background-color: currentColor;
+            background-color: #d6d6d6;
+            /* Pewter Accent */
             transform: scaleX(0);
             transform-origin: right;
             transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1);
@@ -123,14 +176,108 @@
             transform-origin: left;
         }
 
+        .btn-classic:hover {
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        /* --- IMAGE REVEAL & PARALLAX --- */
+        .img-container {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .img-parallax {
+            will-change: transform;
+            transform: scale(1.1);
+        }
+
+        /* --- TEXT REVEAL --- */
+        .reveal-text-container {
+            overflow: hidden;
+        }
+
+        .reveal-text {
+            transform: translateY(100%);
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        .reveal-on-scroll {
+            opacity: 0;
+        }
+
         /* --- CARD HOVER --- */
         .service-card {
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            transition: transform 0.1s ease, box-shadow 0.4s ease, border-color 0.3s;
+            border: 1px solid rgba(68, 68, 76, 0.3);
         }
 
         .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+            /* transform handled by JS tilt */
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8);
+            border-color: rgba(214, 214, 214, 0.4);
+            background-color: #121212;
+            /* Slightly lighter black */
+        }
+
+        /* --- PORTFOLIO CARD --- */
+        .work-card {
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            /* Enable 3D space */
+        }
+
+        .work-card img {
+            transition: transform 0.7s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .work-card:hover img {
+            transform: scale(1.1);
+            /* Zoom more on tilt */
+        }
+
+        .work-overlay {
+            background: linear-gradient(to top, rgba(11, 9, 9, 0.95), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            transform: translateZ(30px);
+            /* Lift text off image */
+        }
+
+        .work-card:hover .work-overlay {
+            opacity: 1;
+        }
+
+        /* --- FAQ ACCORDION --- */
+        .faq-item {
+            border-bottom: 1px solid rgba(68, 68, 76, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: #d6d6d6;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            /* Approximate max height */
+            transition: max-height 0.5s ease-in-out;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
         }
 
         /* --- ANIMATED SHAPES --- */
@@ -142,15 +289,15 @@
 
         .shape-circle {
             border-radius: 50%;
-            border: 1px solid rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(68, 68, 76, 0.3);
         }
 
         .shape-square {
-            border: 1px solid rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(68, 68, 76, 0.3);
         }
 
         .shape-filled {
-            background-color: rgba(0, 0, 0, 0.02);
+            background-color: rgba(68, 68, 76, 0.1);
             border: none;
         }
 
@@ -173,35 +320,43 @@
             }
         }
 
-        /* --- MOBILE BOTTOM NAV --- */
-        .mobile-bottom-nav {
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
-            padding-bottom: env(safe-area-inset-bottom);
-            /* iPhone Home Bar fix */
+        /* Video overlay gradient using Black */
+        .hero-gradient {
+            background: linear-gradient(90deg, #0b0909 0%, rgba(11, 9, 9, 0.9) 35%, rgba(11, 9, 9, 0.4) 65%, rgba(11, 9, 9, 0) 100%);
         }
 
-        .nav-item.active {
-            color: #1a1a1a;
-        }
+        @media (max-width: 768px) {
+            .hero-gradient {
+                background: linear-gradient(to top, #0b0909 0%, rgba(11, 9, 9, 0.95) 40%, rgba(11, 9, 9, 0.6) 70%, rgba(11, 9, 9, 0.2) 100%);
+            }
 
-        .nav-item.active i {
-            transform: translateY(-2px);
+            /* Reset cursor for touch devices */
+            html {
+                cursor: auto;
+            }
+
+            .trail-particle {
+                display: none;
+            }
         }
     </style>
 </head>
 
-<body class="antialiased selection:bg-gray-200 selection:text-black">
+<body class="antialiased selection:bg-pewter selection:text-black">
+
+    <!-- CINEMATIC GRAIN -->
+    <div class="grain-overlay"></div>
 
     <!-- LOADER -->
     <div id="loader"
-        class="fixed inset-0 bg-white z-[100] flex flex-col items-center justify-center transition-opacity duration-700">
+        class="fixed inset-0 bg-black z-[100] flex flex-col items-center justify-center transition-opacity duration-700">
         <div class="text-center">
             <span
-                class="font-serif text-4xl font-bold tracking-tight text-classic-black block mb-6 animate-pulse">Texnox.</span>
-            <div class="w-32 h-[1px] bg-gray-100 overflow-hidden relative mx-auto">
-                <div class="absolute inset-0 bg-classic-black w-full h-full loader-line"></div>
+                class="font-serif text-4xl font-bold tracking-tight text-white block mb-6 animate-pulse">Texnox.</span>
+            <div class="w-32 h-[1px] bg-ebony overflow-hidden relative mx-auto">
+                <div class="absolute inset-0 bg-pewter w-full h-full loader-line"></div>
             </div>
-            <p class="font-sans text-xs text-gray-400 mt-4 tracking-[0.3em] uppercase">Loading Library</p>
+            <p class="font-sans text-xs text-gray mt-4 tracking-[0.3em] uppercase">Loading Library</p>
         </div>
     </div>
 
@@ -217,246 +372,428 @@
         </div>
     </div>
 
-    <!-- NAVBAR (Top) -->
-    <nav class="fixed top-0 w-full z-50 border-b border-gray-100 transition-all duration-300"
+    <!-- NAVBAR (Floating & Adaptive) -->
+    <nav class="fixed top-0 left-1/2 -translate-x-1/2 w-full z-50 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] text-pewter"
         id="navbar">
-        <div class="container mx-auto px-6 lg:px-12 h-16 md:h-20 flex justify-between items-center relative z-50">
+        <div class="h-16 md:h-20 flex justify-between items-center px-6 lg:px-12 w-full">
 
             <!-- Logo -->
-            <a href="#" class="font-serif font-bold text-2xl tracking-tight text-classic-black">
+            <a href="#"
+                class="nav-item-anim font-serif font-bold text-2xl tracking-tight text-white hover:text-pewter transition-colors opacity-0 interactable magnetic">
                 Texnox.
             </a>
 
             <!-- Menu (Desktop) -->
-            <div class="hidden md:flex items-center gap-10 font-sans text-sm font-medium text-gray-500 tracking-wide">
-                <a href="index.html" class="hover:text-black transition-colors">Home</a>
-                <a href="demo.html" class="hover:text-black transition-colors">Demo</a>
-                <a href="plans.html" class="hover:text-black transition-colors">Plans</a>
-                <a href="aboutus.html" class="hover:text-black transition-colors">About</a>
-                <a href="Howwework.html" class="hover:text-black transition-colors">How we Work</a>
+            <div class="hidden md:flex items-center gap-10 font-sans text-sm font-medium tracking-wide opacity-90">
+                <a href="index.html"
+                    class="cipher-text nav-item-anim hover:opacity-100 hover:text-white transition-all opacity-0 interactable magnetic"
+                    data-value="Home">Home</a>
+                <a href="demo.html"
+                    class="cipher-text nav-item-anim hover:opacity-100 hover:text-white transition-all opacity-0 interactable magnetic"
+                    data-value="Demo">Demo</a>
+                <a href="plans.html"
+                    class="cipher-text nav-item-anim hover:opacity-100 hover:text-white transition-all opacity-0 interactable magnetic"
+                    data-value="Pricing">Pricing</a>
+                <a href="aboutus.html"
+                    class="cipher-text nav-item-anim hover:opacity-100 hover:text-white transition-all opacity-0 interactable magnetic"
+                    data-value="About us">About us</a>
+                <a href="Howwework.html"
+                    class="cipher-text nav-item-anim hover:opacity-100 hover:text-white transition-all opacity-0 interactable magnetic"
+                    data-value="How We work">How We Work</a>
             </div>
 
             <!-- CTA (Desktop Only) -->
             <div class="hidden md:block">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLScEjtXoZ86KljP-ulFYZBaUaOu0nf7lczK6e7ZcNxssoeyWkg/viewform?usp=dialog"
-                    class="px-6 py-3 bg-classic-black text-white text-sm font-medium hover:bg-gray-800 transition shadow-lg shadow-gray-200 rounded-sm">
+                <a href="#contact"
+                    class="nav-item-anim opacity-0 px-6 py-3 bg-pewter text-black text-sm font-bold hover:bg-white hover:text-black transition-colors duration-300 shadow-lg shadow-gray/10 rounded-full interactable magnetic"
+                    id="nav-cta">
                     Get in Touch
                 </a>
             </div>
 
-            <!-- Mobile Menu Button (Hamburger - visible on mobile but we'll prioritize bottom nav) -->
-            <button onclick="toggleMenu()" id="mobile-menu-btn" class="md:hidden text-classic-black text-xl p-2"
+            <!-- Mobile Menu Button -->
+            <button onclick="toggleMenu()" id="mobile-menu-btn"
+                class="nav-item-anim opacity-0 md:hidden text-2xl p-2 focus:outline-none hover:text-white transition-colors interactable"
                 title="Toggle menu">
                 <i class="fa-solid fa-bars"></i>
             </button>
-
-        </div>
-
-        <!-- Mobile Menu (Drop down style) -->
-        <div id="mobile-menu"
-            class="md:hidden fixed top-[64px] left-0 w-full bg-white/95 backdrop-blur-xl border-b border-gray-100 transform -translate-y-[150%] transition-transform duration-300 ease-in-out z-40 shadow-xl">
-            <div class="container mx-auto px-6 py-8">
-                <div class="flex flex-col gap-6 font-sans text-lg font-medium text-gray-600 tracking-wide text-center">
-                    <a href="index.html" class="hover:text-black transition-colors py-2 border-b border-gray-50"
-                        onclick="toggleMenu()">Home</a>
-                    <a href="#services" class="hover:text-black transition-colors py-2 border-b border-gray-50"
-                        onclick="toggleMenu()">Services</a>
-                    <a href="plans.html" class="hover:text-black transition-colors py-2 border-b border-gray-50"
-                        onclick="toggleMenu()">Pricing</a>
-                    <a href="aboutus.html" class="hover:text-black transition-colors py-2 border-b border-gray-50"
-                        onclick="toggleMenu()">About</a>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScEjtXoZ86KljP-ulFYZBaUaOu0nf7lczK6e7ZcNxssoeyWkg/viewform?usp=dialog"
-                        class="px-6 py-4 mt-4 bg-classic-black text-white text-sm font-medium hover:bg-gray-800 transition shadow-lg rounded-sm inline-block w-full">
-                        Get in Touch
-                    </a>
-                </div>
-            </div>
         </div>
     </nav>
 
+    <!-- Full Screen Mobile Menu Overlay -->
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-black/95 backdrop-blur-xl z-40 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="flex flex-col gap-8 font-sans text-2xl font-light text-pewter tracking-wide text-center">
+            <a href="#hero" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">Home</a>
+            <a href="#about" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">About</a>
+            <a href="#services" class="hover:text-white hover:scale-110 transition-all"
+                onclick="toggleMenu()">Services</a>
+            <a href="#works" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">Works</a>
+            <a href="#contact"
+                class="px-8 py-4 mt-4 bg-pewter text-black text-lg font-bold rounded-full hover:bg-white transition shadow-lg"
+                onclick="toggleMenu()">
+                Get in Touch
+            </a>
+        </div>
+    </div>
+
 
     <!-- HERO SECTION -->
-    <header class="relative pt-32 pb-16 lg:pt-48 lg:pb-32 z-10 overflow-hidden">
-        <video class="absolute inset-0 w-full h-full object-cover" autoplay muted loop>
-            <source src="87789-602074264.mp4" type="video/mp4">
-        </video>
+    <header id="hero"
+        class="relative pt-32 pb-16 lg:pt-48 lg:pb-32 z-10 overflow-hidden min-h-[90vh] flex items-center bg-black">
+        <!-- Abstract Video Background -->
+        <div class="absolute inset-0 w-full h-full overflow-hidden">
+            <div class="absolute inset-0 bg-black"></div>
+            <!-- Using grayscale filter on video to match monochrome theme -->
+            <video class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale" autoplay muted loop
+                playsinline>
+                <source src="https://videos.pexels.com/video-files/3129957/3129957-uhd_2560_1440_25fps.mp4"
+                    type="video/mp4">
+            </video>
+            <div class="absolute inset-0 hero-gradient pointer-events-none"></div>
+        </div>
+
         <div class="container mx-auto px-6 lg:px-12 relative z-10">
             <div class="max-w-4xl mx-auto text-start">
-
-                <p
-                    class="font-sans text-[10px] md:text-xs font-semibold tracking-[0.2em] text-gray-400 uppercase mb-6 md:mb-8 opacity-0 hero-anim">
-                    Established 2024
-                </p>
-
-                <h1
-                    class="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-classic-black leading-[1.1] mb-8 md:mb-10 opacity-0 hero-anim">
-                    Digital excellence <br>
-                    <span class="italic font-light text-gray-600">redefined.</span>
-                </h1>
-
-                <p
-                    class="font-sans text-start md:text-lg text-gray-500 max-w-2xl  leading-relaxed mb-10 md:mb-12 opacity-0 hero-anim font-light ">
-                    We craft sophisticated websites and digital strategies for brands that value clarity, elegance, and
-                    enduring impact.
-                </p>
-
-                <div class="opacity-0 hero-anim">
-                    <a href="demo.html"
-                        class="inline-flex items-start gap-3 text-classic-black font-medium btn-classic pb-1 text-sm md:text-base">
-                        View Selected Works <i class="fa-solid fa-arrow-right text-xs"></i>
-                    </a>
+                <div class="reveal-text-container">
+                    <p
+                        class="reveal-text font-sans text-[10px] md:text-xs font-bold tracking-[0.25em] text-gray uppercase mb-6 md:mb-8">
+                        Established 2024
+                    </p>
                 </div>
 
+                <div class="reveal-text-container mb-2">
+                    <h1
+                        class="typewriter-effect-1 opacity-0 font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white leading-[1.15] drop-shadow-sm interactable">
+                        Digital excellence
+                    </h1>
+                </div>
+                <div class="reveal-text-container mb-8 md:mb-10">
+                    <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white leading-[1.05]">
+                        <span class="typewriter-effect-2 opacity-0 italic font-light text-pewter">redefined.</span>
+                    </h1>
+                </div>
+
+                <div class="reveal-text-container mb-10 md:mb-12">
+                    <p
+                        class="typewriter-effect-3 opacity-0 font-sans text-start md:text-lg text-pewter max-w-xl leading-relaxed font-normal">
+                        We craft sophisticated websites and digital strategies for brands that value clarity, elegance,
+                        and
+                        enduring impact.
+                    </p>
+                </div>
+
+                <div class="reveal-text opacity-0">
+                    <a href="#services"
+                        class="interactable magnetic inline-flex items-center gap-3 text-white font-semibold btn-classic pb-1 text-sm md:text-base border-b border-gray hover:border-transparent transition-all">
+                        View Selected Works <i class="fa-solid fa-arrow-right text-xs text-pewter"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </header>
 
+
     <!-- ABOUT / PHILOSOPHY -->
-    <section id="about" class="py-16 md:py-32 bg-classic-gray relative z-10 scroll-mt-20">
+    <section id="about" class="py-16 md:py-32 bg-black relative z-10 scroll-mt-20 overflow-hidden">
         <div class="container mx-auto px-6 lg:px-12">
-            <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-start">
-                <div class="md:w-1/3 md:sticky md:top-32 static">
-                    <h2 class="font-serif text-3xl md:text-4xl text-classic-black mb-4 md:mb-6">Our Philosophy</h2>
-                    <div class="h-0.5 w-12 bg-classic-black mb-6 md:mb-0"></div>
-                </div>
-                <div class="md:w-2/3">
-                    <p class="text-xl md:text-3xl font-serif text-classic-charcoal leading-relaxed mb-10 md:mb-12">
-                        "Simplicity is the ultimate sophistication. We strip away the unnecessary to reveal the essence
-                        of your brand."
-                    </p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                        <div>
+            <div class="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center">
+                <!-- Text Content -->
+                <div class="lg:w-1/2">
+                    <div class="reveal-on-scroll">
+                        <h2 class="font-serif text-3xl md:text-5xl text-white mb-6 font-semibold tracking-tight">Our
+                            Philosophy</h2>
+                        <div class="h-1 w-12 bg-pewter mb-8 rounded-full"></div>
+
+                        <p class="text-xl md:text-2xl font-serif text-pewter/80 leading-relaxed mb-10 font-light">
+                            "Simplicity is the ultimate sophistication. We strip away the unnecessary to reveal the
+                            essence
+                            of your brand."
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 delay-100">
+                        <div class="reveal-on-scroll">
                             <h4
-                                class="font-sans font-bold text-sm uppercase tracking-widest mb-4 border-b border-gray-200 pb-2 inline-block">
+                                class="font-sans font-bold text-sm uppercase tracking-widest mb-4 text-pewter pb-2 inline-block border-b border-gray">
                                 Precision</h4>
-                            <p class="text-gray-500 font-light leading-relaxed text-sm md:text-base">Every pixel serves
-                                a purpose. We believe
-                                in design that communicates clearly without shouting. Our layouts breathe, allowing your
-                                content to take center stage.</p>
+                            <p class="text-gray font-light leading-relaxed text-sm md:text-base">
+                                Every pixel serves a purpose. We believe in design that communicates clearly without
+                                shouting.
+                            </p>
                         </div>
-                        <div>
+                        <div class="reveal-on-scroll">
                             <h4
-                                class="font-sans font-bold text-sm uppercase tracking-widest mb-4 border-b border-gray-200 pb-2 inline-block">
+                                class="font-sans font-bold text-sm uppercase tracking-widest mb-4 text-pewter pb-2 inline-block border-b border-gray">
                                 Function</h4>
-                            <p class="text-gray-500 font-light leading-relaxed text-sm md:text-base">Beautiful design is
-                                meaningless without
-                                performance. We build robust systems that scale with your business, ensuring rapid load
-                                times and fluid interactions.</p>
+                            <p class="text-gray font-light leading-relaxed text-sm md:text-base">
+                                Beautiful design is meaningless without performance. We build robust systems that scale.
+                            </p>
                         </div>
                     </div>
+                </div>
+
+                <!-- Image Side -->
+                <div class="lg:w-1/2 w-full">
+                    <!-- Tilt Wrapper -->
+                    <div class="tilt-card interactable w-full h-full">
+                        <div
+                            class="img-container rounded-2xl aspect-[4/5] lg:aspect-square relative w-full shadow-2xl shadow-black/80 group">
+                            <!-- High quality office abstract -->
+                            <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1000&auto=format&fit=crop"
+                                alt="Modern Office Architecture"
+                                class="img-parallax w-full h-full object-cover opacity-80 grayscale transition-all duration-700">
+
+                            <!-- Overlay gradient -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+
+                            <div class="absolute bottom-8 left-8 text-white tilt-inner">
+                                <p class="font-mono text-xs text-pewter mb-2">01 / ARCHITECTURE</p>
+                                <h3 class="font-serif text-2xl">Built for Scale</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IMPACT STATS -->
+    <section class="py-16 bg-ebony/10 border-y border-ebony/30 relative z-10">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="reveal-on-scroll">
+                    <h3 class="font-serif text-4xl md:text-6xl text-white font-bold mb-2 counter" data-target="150">0
+                    </h3>
+                    <p class="font-sans text-xs md:text-sm text-gray uppercase tracking-widest">Projects Delivered</p>
+                </div>
+                <div class="reveal-on-scroll delay-100">
+                    <h3 class="font-serif text-4xl md:text-6xl text-white font-bold mb-2 counter" data-target="98">0
+                    </h3>
+                    <p class="font-sans text-xs md:text-sm text-gray uppercase tracking-widest">% Client Retention</p>
+                </div>
+                <div class="reveal-on-scroll delay-200">
+                    <h3 class="font-serif text-4xl md:text-6xl text-white font-bold mb-2 counter" data-target="12">0
+                    </h3>
+                    <p class="font-sans text-xs md:text-sm text-gray uppercase tracking-widest">Industry Awards</p>
+                </div>
+                <div class="reveal-on-scroll delay-300">
+                    <h3 class="font-serif text-4xl md:text-6xl text-white font-bold mb-2 counter" data-target="5">0</h3>
+                    <p class="font-sans text-xs md:text-sm text-gray uppercase tracking-widest">Years Experience</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- SERVICES -->
-    <section id="services" class="py-16 md:py-32 bg-white relative z-10 scroll-mt-20">
+    <section id="services" class="py-16 md:py-32 bg-ebony/5 relative z-10 scroll-mt-20">
         <div class="container mx-auto px-6 lg:px-12">
-            <div class="text-center mb-12 md:mb-24">
-                <span class="font-sans text-xs font-bold tracking-widest text-gray-400 uppercase">What We Do</span>
-                <h2 class="font-serif text-3xl md:text-4xl text-classic-black mt-4">Our Expertise</h2>
+            <div class="text-center mb-12 md:mb-24 reveal-on-scroll">
+                <span class="font-sans text-xs font-bold tracking-widest text-gray uppercase">What We Do</span>
+                <h2 class="font-serif text-3xl md:text-4xl text-white mt-4">Our Expertise</h2>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                 <!-- Service 1 -->
                 <div
-                    class="service-card p-8 md:p-12 bg-white border border-gray-100 text-center relative overflow-hidden group rounded-lg md:rounded-none shadow-sm md:shadow-none">
+                    class="tilt-card service-card interactable p-8 md:p-12 bg-black border border-ebony text-center relative overflow-hidden group rounded-2xl shadow-sm reveal-on-scroll cursor-none">
                     <div
-                        class="absolute inset-0 bg-gray-50 transform scale-y-0 origin-bottom transition-transform duration-500 group-hover:scale-y-100 z-0">
+                        class="absolute inset-0 bg-ebony/30 transform scale-y-0 origin-bottom transition-transform duration-500 group-hover:scale-y-100 z-0">
                     </div>
-                    <div class="relative z-10">
+                    <div class="relative z-10 tilt-inner">
                         <div
-                            class="w-12 h-12 mx-auto bg-gray-50 group-hover:bg-white rounded-full flex items-center justify-center mb-6 md:mb-8 text-classic-black transition-colors">
-                            <i class="fa-regular fa-window-maximize"></i>
+                            class="w-14 h-14 mx-auto bg-ebony group-hover:bg-pewter rounded-2xl flex items-center justify-center mb-6 md:mb-8 text-pewter group-hover:text-black transition-colors shadow-sm">
+                            <i class="fa-regular fa-window-maximize text-xl"></i>
                         </div>
-                        <h3 class="font-serif text-xl md:text-2xl mb-3 md:mb-4">Web Design</h3>
-                        <p class="text-gray-500 font-light text-sm leading-relaxed">
+                        <h3 class="font-serif text-xl md:text-2xl mb-3 md:mb-4 font-semibold text-white">Web Design</h3>
+                        <p class="text-gray font-light text-sm leading-relaxed mb-4">
                             Bespoke interfaces designed with a focus on typography, layout, and user experience.
                         </p>
+                        <ul class="text-xs text-gray/60 space-y-2 text-left border-t border-ebony/50 pt-4 mt-4">
+                            <li><i class="fa-solid fa-check mr-2 text-pewter"></i> UI/UX Design</li>
+                            <li><i class="fa-solid fa-check mr-2 text-pewter"></i> Interactive Prototyping</li>
+                            <li><i class="fa-solid fa-check mr-2 text-pewter"></i> Design Systems</li>
+                        </ul>
                     </div>
                 </div>
 
                 <!-- Service 2 -->
                 <div
-                    class="service-card p-8 md:p-12 bg-white border border-gray-100 text-center relative overflow-hidden group rounded-lg md:rounded-none shadow-sm md:shadow-none">
+                    class="tilt-card service-card interactable p-8 md:p-12 bg-black border border-ebony text-center relative overflow-hidden group rounded-2xl shadow-sm reveal-on-scroll delay-100 cursor-none">
                     <div
-                        class="absolute inset-0 bg-gray-50 transform scale-y-0 origin-bottom transition-transform duration-500 group-hover:scale-y-100 z-0">
+                        class="absolute inset-0 bg-ebony/30 transform scale-y-0 origin-bottom transition-transform duration-500 group-hover:scale-y-100 z-0">
                     </div>
-                    <div class="relative z-10">
+                    <div class="relative z-10 tilt-inner">
                         <div
-                            class="w-12 h-12 mx-auto bg-gray-50 group-hover:bg-white rounded-full flex items-center justify-center mb-6 md:mb-8 text-classic-black transition-colors">
-                            <i class="fa-solid fa-code"></i>
+                            class="w-14 h-14 mx-auto bg-ebony group-hover:bg-pewter rounded-2xl flex items-center justify-center mb-6 md:mb-8 text-pewter group-hover:text-black transition-colors shadow-sm">
+                            <i class="fa-solid fa-code text-xl"></i>
                         </div>
-                        <h3 class="font-serif text-xl md:text-2xl mb-3 md:mb-4">Development</h3>
-                        <p class="text-gray-500 font-light text-sm leading-relaxed">
+                        <h3 class="font-serif text-xl md:text-2xl mb-3 md:mb-4 font-semibold text-white">Development
+                        </h3>
+                        <p class="text-gray font-light text-sm leading-relaxed mb-4">
                             Clean code architecture using modern frameworks. Semantic HTML, accessibility, and SEO.
                         </p>
+                        <ul class="text-xs text-gray/60 space-y-2 text-left border-t border-ebony/50 pt-4 mt-4">
+                            <li><i class="fa-solid fa-check mr-2 text-pewter"></i> Frontend Engineering</li>
+                            <li><i class="fa-solid fa-check mr-2 text-pewter"></i> CMS Integration</li>
+                            <li><i class="fa-solid fa-check mr-2 text-pewter"></i> Performance Tuning</li>
+                        </ul>
                     </div>
                 </div>
 
                 <!-- Service 3 -->
                 <div
-                    class="service-card p-8 md:p-12 bg-white border border-gray-100 text-center relative overflow-hidden group rounded-lg md:rounded-none shadow-sm md:shadow-none">
+                    class="tilt-card service-card interactable p-8 md:p-12 bg-black border border-ebony text-center relative overflow-hidden group rounded-2xl shadow-sm reveal-on-scroll delay-200 cursor-none">
                     <div
-                        class="absolute inset-0 bg-gray-50 transform scale-y-0 origin-bottom transition-transform duration-500 group-hover:scale-y-100 z-0">
+                        class="absolute inset-0 bg-ebony/30 transform scale-y-0 origin-bottom transition-transform duration-500 group-hover:scale-y-100 z-0">
                     </div>
-                    <div class="relative z-10">
+                    <div class="relative z-10 tilt-inner">
                         <div
-                            class="w-12 h-12 mx-auto bg-gray-50 group-hover:bg-white rounded-full flex items-center justify-center mb-6 md:mb-8 text-classic-black transition-colors">
-                            <i class="fa-solid fa-pen-nib"></i>
+                            class="w-14 h-14 mx-auto bg-ebony group-hover:bg-pewter rounded-2xl flex items-center justify-center mb-6 md:mb-8 text-pewter group-hover:text-black transition-colors shadow-sm">
+                            <i class="fa-solid fa-pen-nib text-xl"></i>
                         </div>
-                        <h3 class="font-serif text-xl md:text-2xl mb-3 md:mb-4">Brand Identity</h3>
-                        <p class="text-gray-500 font-light text-sm leading-relaxed">
+                        <h3 class="font-serif text-xl md:text-2xl mb-3 md:mb-4 font-semibold text-white">Brand Identity
+                        </h3>
+                        <p class="text-gray font-light text-sm leading-relaxed mb-4">
                             Strategic branding that tells your story through logos, colors, and typography.
                         </p>
+                        <ul class="text-xs text-gray/60 space-y-2 text-left border-t border-ebony/50 pt-4 mt-4">
+                            <li><i class="fa-solid fa-check mr-2 text-pewter"></i> Logo Design</li>
+                            <li><i class="fa-solid fa-check mr-2 text-pewter"></i> Brand Guidelines</li>
+                            <li><i class="fa-solid fa-check mr-2 text-pewter"></i> Art Direction</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- NEW SECTION: PROCESS -->
-    <section id="process" class="py-16 md:py-32 bg-classic-gray relative z-10 border-t border-gray-100 scroll-mt-20">
+    <!-- SELECTED WORKS -->
+    <section id="works" class="py-16 md:py-32 bg-black relative z-10 border-t border-ebony/30 scroll-mt-20">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16">
+                <div class="reveal-on-scroll">
+                    <span class="font-sans text-xs font-bold tracking-widest text-gray uppercase">Portfolio</span>
+                    <h2 class="font-serif text-3xl md:text-5xl text-white mt-4 font-semibold">Selected Works</h2>
+                </div>
+                <a href="#"
+                    class="interactable magnetic hidden md:inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-pewter hover:text-white transition reveal-on-scroll">
+                    View All Projects <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Works Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Work 1 -->
+                <div
+                    class="tilt-card work-card interactable rounded-2xl aspect-[4/3] relative cursor-none group reveal-on-scroll shadow-lg shadow-black/50">
+                    <img src="https://images.unsplash.com/photo-1481487484168-9b930d5b7d9f?q=80&w=1000&auto=format&fit=crop"
+                        alt="Project 1"
+                        class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div class="work-overlay absolute inset-0 flex flex-col justify-end p-8 text-white">
+                        <span class="text-pewter font-mono text-xs mb-2">FINTECH</span>
+                        <h3 class="text-2xl font-serif">Nova Banking App</h3>
+                    </div>
+                </div>
+
+                <!-- Work 2 -->
+                <div
+                    class="tilt-card work-card interactable rounded-2xl aspect-[4/3] relative cursor-none group reveal-on-scroll delay-100 md:mt-16 shadow-lg shadow-black/50">
+                    <img src="https://images.unsplash.com/photo-1558655146-d09347e0b7a9?q=80&w=1000&auto=format&fit=crop"
+                        alt="Project 2"
+                        class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div class="work-overlay absolute inset-0 flex flex-col justify-end p-8 text-white">
+                        <span class="text-pewter font-mono text-xs mb-2">ECOMMERCE</span>
+                        <h3 class="text-2xl font-serif">Lumina Fashion</h3>
+                    </div>
+                </div>
+
+                <!-- Work 3 -->
+                <div
+                    class="tilt-card work-card interactable rounded-2xl aspect-[4/3] relative cursor-none group reveal-on-scroll shadow-lg shadow-black/50">
+                    <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1000&auto=format&fit=crop"
+                        alt="Project 3"
+                        class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div class="work-overlay absolute inset-0 flex flex-col justify-end p-8 text-white">
+                        <span class="text-pewter font-mono text-xs mb-2">REAL ESTATE</span>
+                        <h3 class="text-2xl font-serif">Horizon Towers</h3>
+                    </div>
+                </div>
+
+                <!-- Work 4 (CTA Card) -->
+                <div
+                    class="tilt-card interactable rounded-2xl aspect-[4/3] relative bg-ebony flex items-center justify-center text-center p-8 reveal-on-scroll delay-100 md:mt-16 group cursor-none overflow-hidden shadow-lg shadow-black/50">
+                    <div
+                        class="absolute inset-0 bg-pewter transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left">
+                    </div>
+                    <div class="relative z-10 tilt-inner">
+                        <h3 class="text-3xl font-serif text-white group-hover:text-black mb-4 transition-colors">View
+                            More</h3>
+                        <div
+                            class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center mx-auto text-white group-hover:bg-black group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center md:hidden">
+                <a href="#"
+                    class="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-pewter hover:text-white transition">
+                    View All Projects <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process" class="py-16 md:py-32 bg-ebony/10 relative z-10 border-t border-ebony/30 scroll-mt-20">
         <div class="container mx-auto px-6 lg:px-12">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16">
-                <div>
-                    <h2 class="font-serif text-3xl md:text-4xl text-classic-black mb-6 md:mb-8">The Process</h2>
-                    <p class="text-gray-500 font-light leading-relaxed max-w-md text-sm md:text-base">
+                <div class="reveal-on-scroll">
+                    <h2 class="font-serif text-3xl md:text-4xl text-white mb-6 md:mb-8 font-semibold">The Process</h2>
+                    <p class="text-gray font-light leading-relaxed max-w-md text-sm md:text-base">
                         Our methodology is rooted in collaboration and transparency. We guide you through every stage,
                         ensuring the final result exceeds expectations.
                     </p>
                 </div>
                 <div class="space-y-10 md:space-y-12">
-                    <div class="flex gap-6 group">
+                    <div class="flex gap-6 group reveal-on-scroll">
                         <div
-                            class="font-serif text-3xl md:text-4xl text-gray-300 group-hover:text-black transition-colors">
+                            class="font-serif text-3xl md:text-4xl text-ebony group-hover:text-pewter transition-colors font-bold transform group-hover:-translate-y-2 duration-300">
                             01.
                         </div>
                         <div>
-                            <h3 class="font-serif text-lg md:text-xl mb-2 text-classic-black">Discovery & Strategy</h3>
-                            <p class="text-gray-500 font-light text-sm">We immerse ourselves in your business to
+                            <h3
+                                class="font-serif text-lg md:text-xl mb-2 text-white font-medium group-hover:text-pewter transition-colors">
+                                Discovery & Strategy</h3>
+                            <p class="text-gray font-light text-sm">We immerse ourselves in your business to
                                 understand your goals, audience, and market position.</p>
                         </div>
                     </div>
-                    <div class="flex gap-6 group">
+                    <div class="flex gap-6 group reveal-on-scroll delay-100">
                         <div
-                            class="font-serif text-3xl md:text-4xl text-gray-300 group-hover:text-black transition-colors">
+                            class="font-serif text-3xl md:text-4xl text-ebony group-hover:text-pewter transition-colors font-bold transform group-hover:-translate-y-2 duration-300">
                             02.
                         </div>
                         <div>
-                            <h3 class="font-serif text-lg md:text-xl mb-2 text-classic-black">Curation & Design</h3>
-                            <p class="text-gray-500 font-light text-sm">We explore visual directions and craft
+                            <h3
+                                class="font-serif text-lg md:text-xl mb-2 text-white font-medium group-hover:text-pewter transition-colors">
+                                Curation & Design</h3>
+                            <p class="text-gray font-light text-sm">We explore visual directions and craft
                                 prototypes that align with your brand's essence.</p>
                         </div>
                     </div>
-                    <div class="flex gap-6 group">
+                    <div class="flex gap-6 group reveal-on-scroll delay-200">
                         <div
-                            class="font-serif text-3xl md:text-4xl text-gray-300 group-hover:text-black transition-colors">
+                            class="font-serif text-3xl md:text-4xl text-ebony group-hover:text-pewter transition-colors font-bold transform group-hover:-translate-y-2 duration-300">
                             03.
                         </div>
                         <div>
-                            <h3 class="font-serif text-lg md:text-xl mb-2 text-classic-black">Elevation & Launch</h3>
-                            <p class="text-gray-500 font-light text-sm">We refine, test, and deploy. Post-launch, we
+                            <h3
+                                class="font-serif text-lg md:text-xl mb-2 text-white font-medium group-hover:text-pewter transition-colors">
+                                Elevation & Launch</h3>
+                            <p class="text-gray font-light text-sm">We refine, test, and deploy. Post-launch, we
                                 provide support to ensure continued success.</p>
                         </div>
                     </div>
@@ -466,64 +803,120 @@
     </section>
 
     <!-- TESTIMONIAL -->
-    <section class="py-20 md:py-32 bg-white text-center relative z-10 border-t border-gray-50">
-        <div class="container mx-auto px-6">
-            <i class="fa-solid fa-quote-left text-2xl md:text-3xl text-gray-200 mb-6 md:mb-8"></i>
+    <section class="py-20 md:py-32 bg-ebony text-center relative z-10 border-t border-white/5">
+        <div class="container mx-auto px-6 reveal-on-scroll">
+            <i class="fa-solid fa-quote-left text-2xl md:text-3xl text-gray/30 mb-6 md:mb-8"></i>
             <blockquote
-                class="font-serif text-2xl md:text-5xl max-w-5xl mx-auto leading-tight text-classic-black mb-8 md:mb-12">
+                class="font-serif text-2xl md:text-5xl max-w-5xl mx-auto leading-tight text-white mb-8 md:mb-12">
                 "Texnox transformed our digital presence with an elegance we didn't know was possible. They are true
                 artisans of the web."
             </blockquote>
-            <cite class="font-sans text-xs md:text-sm font-bold uppercase tracking-widest not-italic text-gray-400">
+            <cite class="font-sans text-xs md:text-sm font-bold uppercase tracking-widest not-italic text-pewter">
                 Team Texnox</cite>
         </div>
     </section>
 
-    <!-- NEW SECTION: NEWSLETTER -->
-    <section class="py-16 md:py-24 bg-classic-black text-white relative z-10">
-        <div class="container mx-auto px-6 lg:px-12 text-center">
-            <h2 class="font-serif text-2xl md:text-4xl mb-4 md:mb-6">Stay Inspired</h2>
-            <p class="text-gray-400 font-light mb-8 md:mb-10 max-w-lg mx-auto text-sm md:text-base">Join our curated
+    <!-- FAQ SECTION -->
+    <section class="py-16 md:py-24 bg-black relative z-10 border-t border-ebony/30">
+        <div class="container mx-auto px-6 lg:px-12 max-w-4xl">
+            <div class="text-center mb-12 reveal-on-scroll">
+                <span class="font-sans text-xs font-bold tracking-widest text-gray uppercase">FAQ</span>
+                <h2 class="font-serif text-3xl md:text-4xl text-white mt-4">Common Questions</h2>
+            </div>
+
+            <div class="space-y-4">
+                <div class="faq-item reveal-on-scroll interactable cursor-none" onclick="toggleFaq(this)">
+                    <div class="flex justify-between items-center py-6 cursor-pointer">
+                        <h4 class="text-lg md:text-xl font-serif text-white">How long does a typical project take?</h4>
+                        <i class="fa-solid fa-plus text-pewter faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray pb-6 leading-relaxed">Most web design and development projects typically
+                            take between 6 to 12 weeks, depending on the complexity and scope of the requirements.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal-on-scroll delay-100 interactable cursor-none" onclick="toggleFaq(this)">
+                    <div class="flex justify-between items-center py-6 cursor-pointer">
+                        <h4 class="text-lg md:text-xl font-serif text-white">Do you offer post-launch support?</h4>
+                        <i class="fa-solid fa-plus text-pewter faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray pb-6 leading-relaxed">Yes, we provide comprehensive maintenance packages to
+                            ensure your website remains secure, up-to-date, and performing optimally after launch.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal-on-scroll delay-200 interactable cursor-none" onclick="toggleFaq(this)">
+                    <div class="flex justify-between items-center py-6 cursor-pointer">
+                        <h4 class="text-lg md:text-xl font-serif text-white">What platforms do you build on?</h4>
+                        <i class="fa-solid fa-plus text-pewter faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray pb-6 leading-relaxed">We specialize in custom development using React,
+                            Next.js, and modern headless CMS solutions. We also work with Webflow and Shopify for
+                            specific use cases.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="py-16 md:py-24 bg-ebony/5 text-white relative z-10 border-t border-ebony/30">
+        <div class="container mx-auto px-6 lg:px-12 text-center reveal-on-scroll">
+            <h2 class="font-serif text-2xl md:text-4xl mb-4 md:mb-6 font-semibold">Stay Inspired</h2>
+            <p class="text-gray font-light mb-8 md:mb-10 max-w-lg mx-auto text-sm md:text-base">Join our curated
                 newsletter for insights on
                 design, technology, and culture. No spam, just substance.</p>
-            <form class="max-w-md mx-auto flex border-b border-gray-700 pb-2">
+            <form
+                class="max-w-md mx-auto flex border-b border-gray/30 pb-2 focus-within:border-pewter transition-colors interactable magnetic"
+                onsubmit="event.preventDefault();">
                 <input type="email" placeholder="Email Address"
-                    class="bg-transparent w-full outline-none text-white placeholder-gray-600 font-sans p-2">
+                    class="bg-transparent w-full outline-none text-white placeholder-gray/50 font-sans p-2 cursor-none">
                 <button type="submit"
-                    class="text-gray-400 hover:text-white uppercase font-bold text-xs tracking-widest transition shrink-0">Subscribe</button>
+                    class="text-pewter hover:text-white uppercase font-bold text-xs tracking-widest transition shrink-0 interactable magnetic">Subscribe</button>
             </form>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer id="contact" class="bg-classic-gray pt-16 md:pt-24 pb-10 relative z-10 border-t border-gray-100">
+    <footer id="contact" class="bg-black pt-16 md:pt-24 pb-10 relative z-10 border-t border-ebony/30 text-white">
         <div class="container mx-auto px-6 lg:px-12">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 mb-16 md:mb-24">
-                <div>
-                    <h2 class="font-serif text-3xl md:text-5xl mb-6">Have a project<br>in mind?</h2>
+                <div class="reveal-on-scroll">
+                    <h2 class="font-serif text-3xl md:text-5xl mb-6 font-semibold tracking-tight text-white">Have a
+                        project<br>in mind?</h2>
                     <div class="flex flex-col items-start gap-4">
                         <a href="mailto:hello@texnox.com"
-                            class="font-serif text-lg md:text-2xl text-gray-500 hover:text-black transition italic border-b border-gray-200 pb-1">
+                            class="font-serif text-lg md:text-2xl text-gray hover:text-white transition border-b border-transparent hover:border-pewter pb-1 interactable magnetic">
                             texnox.co@gmail.com
                         </a>
                         <a href="tel:+15550123456"
-                            class="font-serif text-lg md:text-xl text-gray-400 hover:text-black transition">
+                            class="font-serif text-lg md:text-xl text-gray/80 hover:text-white transition interactable magnetic">
                             +91 9825576262
                         </a>
                     </div>
                 </div>
                 <div class="flex flex-col justify-end items-start md:items-end">
                     <nav class="space-y-4 text-left md:text-right mb-8 hidden md:block">
-                        <a href="index.html" class="block text-gray-500 hover:text-black transition">Home</a>
-                        <a href="demo.html" class="block text-gray-500 hover:text-black transition">Portfolio</a>
-                        <a href="aboutus.html" class="block text-gray-500 hover:text-black transition">Contact</a>
+                        <a href="#hero"
+                            class="cipher-text reveal-on-scroll block text-gray hover:text-white transition interactable magnetic"
+                            data-value="Home">Home</a>
+                        <a href="#services"
+                            class="cipher-text reveal-on-scroll block text-gray hover:text-white transition interactable magnetic"
+                            data-value="Portfolio">Portfolio</a>
+                        <a href="#about"
+                            class="cipher-text reveal-on-scroll block text-gray hover:text-white transition interactable magnetic"
+                            data-value="About">About</a>
+                        <a href="#contact"
+                            class="cipher-text reveal-on-scroll block text-gray hover:text-white transition interactable magnetic"
+                            data-value="Contact">Contact</a>
                     </nav>
-                    <div class="flex gap-6">
+                    <div class="flex gap-6 reveal-on-scroll">
                         <a href="https://www.instagram.com/texnox.co?igsh=bnR1YnM4aGo4MGli"
-                            class="text-gray-400 hover:text-classic-black transition text-xl"><i
+                            class="text-gray hover:text-white transition text-xl interactable magnetic"><i
                                 class="fa-brands fa-instagram"></i></a>
                         <a href="https://www.linkedin.com/in/texnox-co-98308439a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
-                            class="text-gray-400 hover:text-classic-black transition text-xl"><i
+                            class="text-gray hover:text-white transition text-xl interactable magnetic"><i
                                 class="fa-brands fa-linkedin"></i></a>
 
                     </div>
@@ -531,11 +924,11 @@
             </div>
 
             <div
-                class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400 font-sans tracking-wide">
+                class="reveal-on-scroll border-t border-ebony/30 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray font-sans tracking-wide">
                 <p>&copy; 2024 Texnox Agency. All Rights Reserved.</p>
                 <div class="flex gap-6 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-black">Privacy</a>
-                    <a href="#" class="hover:text-black">Terms</a>
+                    <a href="#" class="hover:text-white interactable magnetic">Privacy</a>
+                    <a href="#" class="hover:text-white interactable magnetic">Terms</a>
                 </div>
             </div>
         </div>
@@ -546,34 +939,326 @@
         // 1. GSAP INIT
         gsap.registerPlugin(ScrollTrigger);
 
+        // --- PARTICLE TRAIL LOGIC (SPARKS) ---
+        let lastTrailX = 0;
+        let lastTrailY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+
+            const dist = Math.hypot(x - lastTrailX, y - lastTrailY);
+
+            if (dist > 8) {
+                createSparkTrail(x, y);
+                lastTrailX = x;
+                lastTrailY = y;
+            }
+        });
+
+        function createSparkTrail(x, y) {
+            const sparkCount = 2;
+
+            for (let i = 0; i < sparkCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('trail-particle');
+                document.body.appendChild(particle);
+
+                const offsetX = (Math.random() - 0.5) * 6;
+                const offsetY = (Math.random() - 0.5) * 6;
+
+                gsap.set(particle, {
+                    x: x + offsetX,
+                    y: y + offsetY,
+                    opacity: 1,
+                    scale: Math.random() * 0.6 + 0.4
+                });
+
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 15 + 5;
+                const destX = Math.cos(angle) * velocity;
+                const destY = Math.sin(angle) * velocity;
+
+                gsap.to(particle, {
+                    x: `+=${destX}`,
+                    y: `+=${destY}`,
+                    opacity: 0,
+                    scale: 0,
+                    duration: Math.random() * 0.4 + 0.2,
+                    ease: "power2.out",
+                    onComplete: () => particle.remove()
+                });
+            }
+        }
+
+        // --- 3D TILT EFFECT FOR CARDS ---
+        const tiltCards = document.querySelectorAll('.tilt-card');
+
+        tiltCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                // Calculate percentage from center
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((y - centerY) / centerY) * -10; // Max tilt 10deg
+                const rotateY = ((x - centerX) / centerX) * 10;
+
+                gsap.to(card, {
+                    rotationX: rotateX,
+                    rotationY: rotateY,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    transformPerspective: 1000,
+                    transformOrigin: "center center"
+                });
+            });
+
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, {
+                    rotationX: 0,
+                    rotationY: 0,
+                    duration: 0.8,
+                    ease: "elastic.out(1, 0.5)"
+                });
+            });
+        });
+
+        // --- CIPHER TEXT REVEAL EFFECT ---
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const cipherElements = document.querySelectorAll('.cipher-text');
+
+        cipherElements.forEach(element => {
+            element.addEventListener('mouseenter', event => {
+                let iteration = 0;
+                const originalText = element.dataset.value;
+                clearInterval(element.interval);
+
+                element.interval = setInterval(() => {
+                    element.innerText = originalText
+                        .split("")
+                        .map((letter, index) => {
+                            if (index < iteration) {
+                                return originalText[index];
+                            }
+                            return letters[Math.floor(Math.random() * 26)]
+                        })
+                        .join("");
+
+                    if (iteration >= originalText.length) {
+                        clearInterval(element.interval);
+                    }
+
+                    iteration += 1 / 3;
+                }, 30);
+            });
+        });
+
+
+        // --- CLICK STATE & PARTICLES ---
+        window.addEventListener('mousedown', (e) => {
+            createParticles(e.clientX, e.clientY);
+        });
+
+        function createParticles(x, y) {
+            const particleCount = 12;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('cursor-particle');
+                document.body.appendChild(particle);
+
+                gsap.set(particle, {
+                    x: x,
+                    y: y,
+                    opacity: 1,
+                    scale: 1
+                });
+
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 60 + 20;
+                const destX = Math.cos(angle) * velocity;
+                const destY = Math.sin(angle) * velocity;
+
+                gsap.to(particle, {
+                    x: `+=${destX}`,
+                    y: `+=${destY}`,
+                    opacity: 0,
+                    scale: 0,
+                    rotation: Math.random() * 360,
+                    duration: Math.random() * 0.6 + 0.4,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        particle.remove();
+                    }
+                });
+            }
+        }
+
+        // --- MAGNETIC BUTTON EFFECT ---
+        const magnets = document.querySelectorAll('.magnetic');
+
+        magnets.forEach((magnet) => {
+            magnet.addEventListener('mousemove', (e) => {
+                const bounding = magnet.getBoundingClientRect();
+                const x = (e.clientX - bounding.left) - (bounding.width / 2);
+                const y = (e.clientY - bounding.top) - (bounding.height / 2);
+
+                gsap.to(magnet, {
+                    x: x * 0.3,
+                    y: y * 0.3,
+                    duration: 0.3,
+                    ease: "power3.out"
+                });
+            });
+
+            magnet.addEventListener('mouseleave', () => {
+                gsap.to(magnet, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "elastic.out(1, 0.3)"
+                });
+            });
+        });
+
+
+        // --- FAQ TOGGLE ---
+        function toggleFaq(el) {
+            el.classList.toggle('active');
+        }
+
+        // --- MOBILE MENU TOGGLE ---
+        let isMenuOpen = false;
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.getElementById('mobile-menu-btn');
+
+            isMenuOpen = !isMenuOpen;
+
+            if (isMenuOpen) {
+                menu.classList.remove('opacity-0', 'pointer-events-none');
+                menu.classList.add('opacity-100', 'pointer-events-auto');
+                btn.innerHTML = '<i class="fa-solid fa-times"></i>';
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.remove('opacity-100', 'pointer-events-auto');
+                menu.classList.add('opacity-0', 'pointer-events-none');
+                btn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                document.body.style.overflow = '';
+            }
+        }
+
         function initAnimations() {
-            // Hero Text Fade In
-            gsap.to('.hero-anim', {
-                y: 0,
+            // Navbar animation
+            gsap.to('.nav-item-anim', {
                 opacity: 1,
-                duration: 1.2,
-                stagger: 0.2,
+                y: 0,
+                duration: 1,
+                stagger: 0.1,
                 ease: "power3.out",
                 delay: 0.2
             });
+            gsap.set('.nav-item-anim', { y: -20 });
 
-            // Scroll Animations for Services
-            gsap.utils.toArray('.service-card').forEach((card, i) => {
-                gsap.from(card, {
+
+            // Hero Text Staggered Reveal
+            const textReveals = gsap.utils.toArray('.reveal-text');
+            textReveals.forEach((text, i) => {
+                gsap.to(text, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1.2,
+                    ease: "power3.out",
+                    delay: 0.5 + (i * 0.15)
+                });
+            });
+
+            // Typewriter Effect Function
+            function typeWriter(element, delay = 0, speed = 0.04) {
+                const text = element.innerText;
+                element.innerHTML = "";
+                element.setAttribute('aria-label', text);
+                element.style.opacity = '1';
+
+                const chars = text.split("");
+                chars.forEach((char) => {
+                    const span = document.createElement("span");
+                    span.textContent = char;
+                    span.style.opacity = "0";
+                    if (char === " ") {
+                        span.innerHTML = "&nbsp;";
+                    }
+                    element.appendChild(span);
+                });
+
+                gsap.to(element.children, {
+                    opacity: 1,
+                    duration: 0.1,
+                    stagger: speed,
+                    ease: "none",
+                    delay: delay
+                });
+            }
+
+            const t1 = document.querySelector('.typewriter-effect-1');
+            const t2 = document.querySelector('.typewriter-effect-2');
+            const t3 = document.querySelector('.typewriter-effect-3');
+
+            if (t1) typeWriter(t1, 0.5);
+            if (t2) typeWriter(t2, 1.5);
+            if (t3) typeWriter(t3, 2.0, 0.015);
+
+            // General Scroll Reveals
+            gsap.utils.toArray('.reveal-on-scroll').forEach((elem) => {
+                gsap.fromTo(elem,
+                    { y: 30, opacity: 0 },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 1,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: elem,
+                            start: "top 90%",
+                        }
+                    }
+                );
+            });
+
+            // Counter Animation for Stats
+            gsap.utils.toArray('.counter').forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                gsap.to(counter, {
+                    innerText: target,
+                    duration: 2,
+                    snap: { innerText: 1 },
                     scrollTrigger: {
-                        trigger: card,
-                        start: "top 90%", // Trigger earlier on mobile
-                    },
-                    y: 30,
-                    opacity: 0,
-                    duration: 0.8,
-                    ease: "power2.out",
-                    delay: i * 0.1
+                        trigger: counter,
+                        start: "top 85%"
+                    }
+                });
+            });
+
+            // Parallax Images
+            gsap.utils.toArray('.img-parallax').forEach((img) => {
+                gsap.to(img, {
+                    yPercent: 20,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: img.parentElement,
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: true
+                    }
                 });
             });
         }
 
-        // Animate Shapes
+        // Animate Shapes (Background)
         gsap.to('.shape-anim', {
             y: -40,
             rotation: 15,
@@ -587,7 +1272,7 @@
             }
         });
 
-        // Parallax Effect for Shapes on Scroll
+        // Parallax Effect for Shapes on Mouse Move
         document.addEventListener('mousemove', (e) => {
             const shapes = document.querySelectorAll('.classic-shape');
             const x = (window.innerWidth - e.pageX * 2) / 100;
@@ -606,53 +1291,47 @@
 
         // LOADER LOGIC
         window.addEventListener('load', () => {
+            removeLoader();
+        });
+
+        setTimeout(removeLoader, 3000);
+
+        function removeLoader() {
             const loader = document.getElementById('loader');
+            if (!loader || loader.style.display === 'none') return;
+
             setTimeout(() => {
                 loader.style.opacity = '0';
                 setTimeout(() => {
                     loader.style.display = 'none';
                     initAnimations();
                 }, 700);
-            }, 600); // Loader visible time
-        });
-
-        // MOBILE MENU LOGIC
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu'); // Fixed selector to match ID
-        let isMenuOpen = false;
-
-        function toggleMenu() {
-            isMenuOpen = !isMenuOpen;
-            if (isMenuOpen) {
-                mobileMenu.style.transform = 'translateY(0)';
-                mobileMenuBtn.innerHTML = '<i class="fa-solid fa-times"></i>';
-                mobileMenuBtn.setAttribute('title', 'Close menu');
-            } else {
-                mobileMenu.style.transform = 'translateY(-150%)'; // Slide up completely
-                mobileMenuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
-                mobileMenuBtn.setAttribute('title', 'Open menu');
-            }
+            }, 600);
         }
 
-        // Make Bottom Nav Active State Work (Simple hash check)
-        const navItems = document.querySelectorAll('.nav-item');
-        navItems.forEach(item => {
-            item.addEventListener('click', function () {
-                navItems.forEach(nav => nav.classList.remove('active', 'text-classic-black'));
-                navItems.forEach(nav => nav.classList.add('text-gray-400'));
-
-                this.classList.remove('text-gray-400');
-                this.classList.add('active', 'text-classic-black');
-            });
-        });
-
-        // Navbar transparency on scroll
+        // Navbar transparency & color switch (Adaptive Floating Logic)
         const navbar = document.getElementById('navbar');
+        const navCta = document.getElementById('nav-cta');
+
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                navbar.classList.add('bg-white/90', 'backdrop-blur-md');
+                // Floating State: Shrink width, add background/blur, move down
+                navbar.classList.remove('w-full', 'top-0', 'border-transparent');
+                navbar.classList.add('w-[92%]', 'md:w-[85%]', 'top-6', 'rounded-2xl', 'bg-black/80', 'backdrop-blur-xl', 'border', 'border-ebony/50', 'shadow-2xl', 'shadow-black/50');
+
+                if (navCta) {
+                    navCta.classList.remove('bg-pewter', 'text-black');
+                    navCta.classList.add('bg-white', 'text-black');
+                }
             } else {
-                navbar.classList.remove('bg-white/90', 'backdrop-blur-md');
+                // Top State: Full width, transparent
+                navbar.classList.add('w-full', 'top-0', 'border-transparent');
+                navbar.classList.remove('w-[92%]', 'md:w-[85%]', 'top-6', 'rounded-2xl', 'bg-black/80', 'backdrop-blur-xl', 'border', 'border-ebony/50', 'shadow-2xl', 'shadow-black/50');
+
+                if (navCta) {
+                    navCta.classList.add('bg-pewter', 'text-black');
+                    navCta.classList.remove('bg-white', 'text-black');
+                }
             }
         });
     </script>
