@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Texnox | Design Demos</title>
     <meta name="description" content="Texnox Design Library: A curation of our finest digital work.">
 
@@ -65,14 +65,17 @@
             --accent: #44444c;
         }
 
-        html {
-            cursor: auto;
-        }
-
+        /* CRITICAL FIX FOR HORIZONTAL SCROLL */
+        html,
         body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
             background-color: var(--bg-main) !important;
             color: var(--text-main) !important;
-            overflow-x: hidden;
+            position: relative;
+            /* Prevents bounce scroll on some mobile browsers */
+            overscroll-behavior-y: none;
         }
 
         /* --- CINEMATIC GRAIN OVERLAY --- */
@@ -80,6 +83,8 @@
             position: fixed;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
@@ -99,6 +104,7 @@
             pointer-events: none;
             z-index: 9999;
             box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
         }
 
         /* --- CLICK PARTICLES --- */
@@ -112,6 +118,7 @@
             pointer-events: none;
             z-index: 9998;
             opacity: 0;
+            border-radius: 50%;
         }
 
         /* Override White/Gray Backgrounds */
@@ -169,7 +176,6 @@
         /* --- DEMO CARD --- */
         .demo-card {
             transition: transform 0.1s ease;
-            /* Faster for tilt */
             perspective: 1000px;
             transform-style: preserve-3d;
         }
@@ -178,6 +184,9 @@
             border: 1px solid var(--border-color);
             transition: all 0.4s ease;
             transform-style: preserve-3d;
+            /* Fix for image bleed on some browsers */
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         .demo-card:hover .demo-img-container {
@@ -189,10 +198,8 @@
             opacity: 0;
             transition: opacity 0.4s ease;
             background-color: rgba(11, 9, 9, 0.85) !important;
-            /* Dark overlay */
             backdrop-filter: blur(4px);
             z-index: 20;
-            /* Ensure overlay is above slider */
         }
 
         .demo-card:hover .demo-overlay {
@@ -204,27 +211,6 @@
             color: #ffffff !important;
             font-weight: 700 !important;
             border-bottom: 1px solid #ffffff !important;
-        }
-
-        /* --- SHAPES --- */
-        .classic-shape {
-            position: absolute;
-            z-index: 0;
-            pointer-events: none;
-            border-color: rgba(255, 255, 255, 0.1) !important;
-        }
-
-        .shape-filled {
-            background-color: rgba(255, 255, 255, 0.03) !important;
-        }
-
-        .shape-circle {
-            border-radius: 50%;
-            border: 1px solid rgba(0, 0, 0, 0.04);
-        }
-
-        .shape-square {
-            border: 1px solid rgba(0, 0, 0, 0.04);
         }
 
         /* --- LOADER --- */
@@ -262,6 +248,16 @@
             .trail-particle {
                 display: none;
             }
+
+            /* Disable hover effects on mobile to prevent sticky states */
+            .demo-card:hover .demo-img-container {
+                transform: none !important;
+            }
+
+            .tilt-card {
+                pointer-events: none;
+                /* Disables the JS tilt calculation on mobile */
+            }
         }
     </style>
 </head>
@@ -285,7 +281,8 @@
     </div>
 
     <!-- NAVBAR (Floating & Adaptive) -->
-    <nav class="fixed top-0 left-1/2 -translate-x-1/2 w-full z-50 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] text-pewter"
+    <!-- Added max-w-[100vw] constraint and better centering handling -->
+    <nav class="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[100vw] z-50 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] text-pewter box-border"
         id="navbar">
         <div class="h-16 md:h-20 flex justify-between items-center px-6 lg:px-12 w-full">
 
@@ -325,7 +322,7 @@
 
             <!-- Mobile Menu Button -->
             <button onclick="toggleMenu()" id="mobile-menu-btn"
-                class="nav-item-anim opacity-0 md:hidden text-2xl p-2 focus:outline-none hover:text-white transition-colors interactable"
+                class="nav-item-anim opacity-0 md:hidden text-2xl p-2 focus:outline-none hover:text-white transition-colors interactable relative z-50"
                 title="Toggle menu">
                 <i class="fa-solid fa-bars"></i>
             </button>
@@ -334,7 +331,7 @@
 
     <!-- Full Screen Mobile Menu Overlay -->
     <div id="mobile-menu"
-        class="fixed inset-0 bg-black/95 backdrop-blur-xl z-40 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300">
+        class="fixed inset-0 bg-black/95 backdrop-blur-xl z-40 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300 w-screen h-screen overflow-hidden">
         <div class="flex flex-col gap-8 font-sans text-2xl font-light text-pewter tracking-wide text-center">
             <a href="#hero" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">Home</a>
             <a href="#about" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">About</a>
@@ -351,31 +348,31 @@
 
 
     <!-- HERO SECTION WITH VIDEO BACKGROUND -->
-    <header class="relative pt-32 pb-32 lg:pt-48 lg:pb-40 bg-black z-10 overflow-hidden">
+    <!-- Added max-w-full to container to prevent overflow -->
+    <header id="hero" class="relative pt-32 pb-32 lg:pt-48 lg:pb-40 bg-black z-10 overflow-hidden w-full max-w-full">
         <!-- SEO Optimized Background Video -->
         <div class="absolute inset-0 w-full h-full overflow-hidden z-0">
-            <!-- Poster image loads immediately for SEO/LCP. Video loads lazily or immediately depending on bandwidth -->
             <video class="absolute inset-0 w-full h-full object-cover opacity-40 grayscale" autoplay muted loop
                 playsinline poster="https://images.pexels.com/videos/3130182/pictures/preview-0.jpg">
                 <source src="https://videos.pexels.com/video-files/3130182/3130182-hd_1920_1080_30fps.mp4"
                     type="video/mp4">
             </video>
-            <!-- Gradient Overlay for Accessibility (Text Contrast) -->
+            <!-- Gradient Overlay -->
             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/40 pointer-events-none">
             </div>
         </div>
 
-        <div class="container mx-auto px-6 lg:px-12 text-center relative z-10">
+        <div class="container mx-auto px-6 lg:px-12 text-center relative z-10 max-w-full">
             <p
                 class="font-sans text-xs font-semibold tracking-[0.2em] text-gray-400 uppercase mb-6 opacity-0 hero-anim">
                 Portfolio Showcase
             </p>
             <h1
-                class="font-serif text-4xl md:text-6xl lg:text-7xl text-white leading-tight mb-8 opacity-0 hero-anim drop-shadow-lg">
+                class="font-serif text-4xl md:text-6xl lg:text-7xl text-white leading-tight mb-8 opacity-0 hero-anim drop-shadow-lg break-words">
                 Design <span class="italic font-light text-pewter">Library.</span>
             </h1>
             <p
-                class="font-sans text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed opacity-0 hero-anim font-light drop-shadow-md">
+                class="font-sans text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed opacity-0 hero-anim font-light drop-shadow-md px-4">
                 Explore our collection of handcrafted digital experiences. Each project is a testament to precision and
                 timeless aesthetics.
             </p>
@@ -383,9 +380,9 @@
     </header>
 
     <!-- FILTERS -->
-    <section class="pb-16 bg-white relative z-10 pt-16">
+    <section class="pb-16 bg-white relative z-10 pt-16 w-full max-w-full overflow-hidden">
         <div class="container mx-auto px-6 lg:px-12">
-            <div class="flex flex-wrap justify-center gap-8 font-sans text-sm tracking-widest uppercase text-gray-400"
+            <div class="flex flex-wrap justify-center gap-6 md:gap-8 font-sans text-sm tracking-widest uppercase text-gray-400"
                 id="filter-container">
                 <button class="filter-btn filter-active interactable magnetic" data-filter="all">All Work</button>
                 <button class="filter-btn hover:text-white transition pb-1 interactable magnetic"
@@ -399,26 +396,30 @@
             </div>
         </div>
     </section>
+
     <!-- DEMO GRID -->
-    <section class="pb-32 bg-white relative z-10">
+    <section class="pb-32 bg-white relative z-10 w-full max-w-full overflow-hidden">
         <div class="container mx-auto px-6 lg:px-12">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12" id="demo-grid">
 
                 <!-- Demo Item 1: Creative (Sipso) -->
-                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card"
+                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card w-full"
                     data-category="creative">
                     <div
-                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container">
+                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container w-full">
                         <!-- Image Slider Wrapper -->
                         <div class="slider-wrapper absolute inset-0 w-full h-full">
                             <img src="imgs/sipso.png"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Sipso+Preview'"
                                 alt="Sipso Cafe 1">
                             <img src="imgs/sipso2.png"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Sipso+Detail'"
                                 alt="Sipso Cafe 2">
                             <img src="imgs/sipso1.png"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Sipso+Menu'"
                                 alt="Sipso Cafe 3">
                         </div>
 
@@ -445,19 +446,22 @@
                 </div>
 
                 <!-- Demo Item 2: E-Commerce (Bloom) -->
-                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card"
+                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card w-full"
                     data-category="ecommerce">
                     <div
-                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container">
+                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container w-full">
                         <div class="slider-wrapper absolute inset-0 w-full h-full">
                             <img src="imgs/bloom&basket.png"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Bloom+Main'"
                                 alt="Bloom 1">
                             <img src="imgs/bloom2.png"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Bloom+Detail'"
                                 alt="Bloom 2">
                             <img src="imgs/bloom3.png"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Bloom+Cart'"
                                 alt="Bloom 3">
                         </div>
                         <div class="demo-overlay absolute inset-0 flex items-center justify-center gap-4">
@@ -484,19 +488,22 @@
                 </div>
 
                 <!-- Demo Item 3: Creative (Brewly) -->
-                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card"
+                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card w-full"
                     data-category="creative">
                     <div
-                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container">
+                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container w-full">
                         <div class="slider-wrapper absolute inset-0 w-full h-full">
                             <img src="imgs/Brewly.png"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Brewly+Main'"
                                 alt="Brewly 1">
                             <img src="imgs/brewly2.png"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Brewly+Cups'"
                                 alt="Brewly 2">
                             <img src="imgs/brewly3.png"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Brewly+Shop'"
                                 alt="Brewly 3">
                         </div>
                         <div class="demo-overlay absolute inset-0 flex items-center justify-center gap-4">
@@ -522,19 +529,22 @@
                 </div>
 
                 <!-- Demo Item 4: Corporate / SaaS (Boost) -->
-                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card"
+                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card w-full"
                     data-category="corporate saas">
                     <div
-                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container">
+                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container w-full">
                         <div class="slider-wrapper absolute inset-0 w-full h-full">
                             <img src="imgs/boostpage.png"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Boost+SaaS'"
                                 alt="Boost 1">
                             <img src="imgs/boost2.png"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Boost+Dashboard'"
                                 alt="Boost 2">
                             <img src="imgs/boost3.png"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Boost+Analytics'"
                                 alt="Boost 3">
                         </div>
                         <div class="demo-overlay absolute inset-0 flex items-center justify-center gap-4">
@@ -560,16 +570,18 @@
                 </div>
 
                 <!-- Demo Item 5: E-Commerce (Belamon) -->
-                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card"
+                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card w-full"
                     data-category="ecommerce">
                     <div
-                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container">
+                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container w-full">
                         <div class="slider-wrapper absolute inset-0 w-full h-full">
                             <img src="imgs/belamon.png"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Belamon+Store'"
                                 alt="Belamon 1">
                             <img src="imgs/belamon2.png"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Belamon+Products'"
                                 alt="Belamon 2">
                         </div>
                         <div class="demo-overlay absolute inset-0 flex items-center justify-center gap-4">
@@ -593,20 +605,24 @@
                             com</span>
                     </div>
                 </div>
+
                 <!-- Demo Item 6: Corporate (titenium) -->
-                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card"
+                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card w-full"
                     data-category="corporate">
                     <div
-                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container">
+                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container w-full">
                         <div class="slider-wrapper absolute inset-0 w-full h-full">
                             <img src="imgs/titenium.png"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Titanium+Gym'"
                                 alt="Corporate 1">
                             <img src="imgs/titenium2.png"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Titanium+Inside'"
                                 alt="Corporate 2">
                             <img src="imgs/titenium3.png"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Titanium+Equipment'"
                                 alt="Corporate 3">
                         </div>
                         <div class="demo-overlay absolute inset-0 flex items-center justify-center gap-4">
@@ -637,7 +653,8 @@
     </section>
 
     <!-- FOOTER -->
-    <footer id="contact" class="bg-black pt-16 md:pt-24 pb-10 relative z-10 border-t border-gray-100">
+    <footer id="contact"
+        class="bg-black pt-16 md:pt-24 pb-10 relative z-10 border-t border-gray-100 w-full max-w-full overflow-hidden">
         <div class="container mx-auto px-6 lg:px-12">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 mb-16 md:mb-24">
                 <div>
@@ -695,6 +712,9 @@
         let lastTrailY = 0;
 
         window.addEventListener('mousemove', (e) => {
+            // Prevent particles from spawning outside viewport, which can cause scroll
+            if (e.clientX > window.innerWidth || e.clientY > window.innerHeight) return;
+
             const x = e.clientX;
             const y = e.clientY;
 
@@ -779,32 +799,38 @@
         }
 
         // --- MAGNETIC BUTTON EFFECT ---
-        const magnets = document.querySelectorAll('.magnetic');
-        magnets.forEach((magnet) => {
-            magnet.addEventListener('mousemove', (e) => {
-                const bounding = magnet.getBoundingClientRect();
-                const x = (e.clientX - bounding.left) - (bounding.width / 2);
-                const y = (e.clientY - bounding.top) - (bounding.height / 2);
+        // Added check for mobile to disable magnetic effect on touch
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-                gsap.to(magnet, {
-                    x: x * 0.3,
-                    y: y * 0.3,
-                    duration: 0.3,
-                    ease: "power3.out"
+        if (!isMobile) {
+            const magnets = document.querySelectorAll('.magnetic');
+            magnets.forEach((magnet) => {
+                magnet.addEventListener('mousemove', (e) => {
+                    const bounding = magnet.getBoundingClientRect();
+                    const x = (e.clientX - bounding.left) - (bounding.width / 2);
+                    const y = (e.clientY - bounding.top) - (bounding.height / 2);
+
+                    gsap.to(magnet, {
+                        x: x * 0.3,
+                        y: y * 0.3,
+                        duration: 0.3,
+                        ease: "power3.out"
+                    });
+                });
+
+                magnet.addEventListener('mouseleave', () => {
+                    gsap.to(magnet, {
+                        x: 0,
+                        y: 0,
+                        duration: 0.8,
+                        ease: "elastic.out(1, 0.3)"
+                    });
                 });
             });
-
-            magnet.addEventListener('mouseleave', () => {
-                gsap.to(magnet, {
-                    x: 0,
-                    y: 0,
-                    duration: 0.8,
-                    ease: "elastic.out(1, 0.3)"
-                });
-            });
-        });
+        }
 
         // --- 3D TILT EFFECT FOR DEMO CARDS ---
+        // Disabled on mobile via CSS pointer-events
         const tiltCards = document.querySelectorAll('.tilt-card');
         tiltCards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
@@ -918,6 +944,16 @@
                 delay: 0.2
             });
 
+            // Navbar Animation - Added to fix hidden navbar items
+            gsap.to('.nav-item-anim', {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                stagger: 0.1,
+                ease: "power3.out",
+                delay: 0.8
+            });
+
             // Grid Animation
             gsap.utils.toArray('.scroll-anim').forEach((el, i) => {
                 gsap.to(el, {
@@ -934,17 +970,9 @@
             });
 
             // Initial setup for grid items
-            gsap.set('.scroll-anim', { y: 30, opacity: 0 });
-
-            // Background Shapes Animation
-            gsap.to('.shape-anim', {
-                y: -30,
-                rotation: 10,
-                duration: 10,
-                yoyo: true,
-                repeat: -1,
-                ease: "sine.inOut",
-                stagger: { amount: 3, from: "random" }
+            gsap.set('.scroll-anim', {
+                y: 30,
+                opacity: 0
             });
 
             // Initialize Sliders
@@ -970,7 +998,7 @@
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
                 // Floating State
-                navbar.classList.remove('w-full', 'top-0', 'border-transparent');
+                navbar.classList.remove('w-full', 'top-0', 'border-transparent', 'max-w-[100vw]');
                 navbar.classList.add('w-[92%]', 'md:w-[85%]', 'top-6', 'rounded-2xl', 'bg-black/80', 'backdrop-blur-xl', 'border', 'border-ebony/50', 'shadow-2xl', 'shadow-black/50');
 
                 if (navCta) {
@@ -979,7 +1007,7 @@
                 }
             } else {
                 // Top State
-                navbar.classList.add('w-full', 'top-0', 'border-transparent');
+                navbar.classList.add('w-full', 'top-0', 'border-transparent', 'max-w-[100vw]');
                 navbar.classList.remove('w-[92%]', 'md:w-[85%]', 'top-6', 'rounded-2xl', 'bg-black/80', 'backdrop-blur-xl', 'border', 'border-ebony/50', 'shadow-2xl', 'shadow-black/50');
 
                 if (navCta) {
