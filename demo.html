@@ -191,6 +191,8 @@
             background-color: rgba(11, 9, 9, 0.85) !important;
             /* Dark overlay */
             backdrop-filter: blur(4px);
+            z-index: 20;
+            /* Ensure overlay is above slider */
         }
 
         .demo-card:hover .demo-overlay {
@@ -295,16 +297,13 @@
 
             <!-- Menu (Desktop) -->
             <div class="hidden md:flex items-center gap-10 font-sans text-sm font-medium tracking-wide opacity-90">
-                <a href="index.html"
-                    class="hover:opacity-100 hover:text-white transition-all interactable magnetic">Home</a>
-                <a href="demo.html"
+                <a href="#" class="hover:opacity-100 hover:text-white transition-all interactable magnetic">Home</a>
+                <a href="#"
                     class="text-white border-b border-white opacity-100 transition-all interactable magnetic">Demo</a>
-                <a href="plans.html"
-                    class="hover:opacity-100 hover:text-white transition-all interactable magnetic">Plans</a>
-                <a href="aboutus.html"
-                    class="hover:opacity-100 hover:text-white transition-all interactable magnetic">About</a>
-                <a href="Howwework.html"
-                    class="hover:opacity-100 hover:text-white transition-all interactable magnetic">How we Work</a>
+                <a href="#" class="hover:opacity-100 hover:text-white transition-all interactable magnetic">Plans</a>
+                <a href="#" class="hover:opacity-100 hover:text-white transition-all interactable magnetic">About</a>
+                <a href="#" class="hover:opacity-100 hover:text-white transition-all interactable magnetic">How we
+                    Work</a>
             </div>
 
             <!-- CTA (Desktop Only) -->
@@ -329,13 +328,11 @@
     <div id="mobile-menu"
         class="fixed inset-0 bg-black/95 backdrop-blur-xl z-40 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300">
         <div class="flex flex-col gap-8 font-sans text-2xl font-light text-pewter tracking-wide text-center">
-            <a href="index.html" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">Home</a>
-            <a href="demo.html" class="text-white hover:scale-110 transition-all" onclick="toggleMenu()">Demo</a>
-            <a href="plans.html" class="hover:text-white hover:scale-110 transition-all"
-                onclick="toggleMenu()">Plans</a>
-            <a href="aboutus.html" class="hover:text-white hover:scale-110 transition-all"
-                onclick="toggleMenu()">About</a>
-            <a href="Howwework.html" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">How
+            <a href="#" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">Home</a>
+            <a href="#" class="text-white hover:scale-110 transition-all" onclick="toggleMenu()">Demo</a>
+            <a href="#" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">Plans</a>
+            <a href="#" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">About</a>
+            <a href="#" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">How
                 we Work</a>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLScEjtXoZ86KljP-ulFYZBaUaOu0nf7lczK6e7ZcNxssoeyWkg/viewform?usp=dialog"
                 class="px-8 py-4 mt-4 bg-pewter text-black text-lg font-bold rounded-full hover:bg-white transition shadow-lg"
@@ -394,19 +391,29 @@
             </div>
         </div>
     </section>
-
     <!-- DEMO GRID -->
     <section class="pb-32 bg-white relative z-10">
         <div class="container mx-auto px-6 lg:px-12">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12" id="demo-grid">
 
-                <!-- Demo Item 1: Creative -->
+                <!-- Demo Item 1: Creative (Sipso) -->
                 <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card"
                     data-category="creative">
-                    <div class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6">
-                        <img src="imgs/sipso.png"
-                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                            alt="Sipso Cafe">
+                    <div
+                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container">
+                        <!-- Image Slider Wrapper -->
+                        <div class="slider-wrapper absolute inset-0 w-full h-full">
+                            <img src="imgs/sipso.png"
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
+                                alt="Sipso Cafe 1">
+                            <img src="imgs/sipso2.png"
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                alt="Sipso Cafe 2">
+                            <img src="imgs/sipso1.png"
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                alt="Sipso Cafe 3">
+                        </div>
+
                         <div class="demo-overlay absolute inset-0 flex items-center justify-center gap-4">
                             <a href="https://texnoxsipso.vercel.app/"
                                 class="px-6 py-3 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-full hover:bg-pewter transition-colors duration-300 shadow-lg flex items-center gap-2 interactable magnetic">
@@ -429,13 +436,22 @@
                     </div>
                 </div>
 
-                <!-- Demo Item 2: E-Commerce -->
+                <!-- Demo Item 2: E-Commerce (Bloom) -->
                 <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card"
                     data-category="ecommerce">
-                    <div class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6">
-                        <img src="imgs/bloom&basket.png"
-                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                            alt="Bloom & Basket">
+                    <div
+                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container">
+                        <div class="slider-wrapper absolute inset-0 w-full h-full">
+                            <img src="imgs/bloom&basket.png"
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
+                                alt="Bloom 1">
+                            <img src="imgs/bloom2.png"
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                alt="Bloom 2">
+                            <img src="imgs/bloom3.png"
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                alt="Bloom 3">
+                        </div>
                         <div class="demo-overlay absolute inset-0 flex items-center justify-center gap-4">
                             <a href="https://bloombytexnox.vercel.app/"
                                 class="px-6 py-3 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-full hover:bg-pewter transition-colors duration-300 shadow-lg flex items-center gap-2 interactable magnetic">
@@ -459,13 +475,22 @@
                     </div>
                 </div>
 
-                <!-- Demo Item 3: Creative -->
+                <!-- Demo Item 3: Creative (Brewly) -->
                 <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card"
                     data-category="creative">
-                    <div class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6">
-                        <img src="imgs/Brewly.png"
-                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                            alt="Brewly Cafe">
+                    <div
+                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container">
+                        <div class="slider-wrapper absolute inset-0 w-full h-full">
+                            <img src="imgs/Brewly.png"
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
+                                alt="Brewly 1">
+                            <img src="imgs/brewly2.png"
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                alt="Brewly 2">
+                            <img src="imgs/brewly3.png"
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                alt="Brewly 3">
+                        </div>
                         <div class="demo-overlay absolute inset-0 flex items-center justify-center gap-4">
                             <a href="https://brewlybytexnox.vercel.app/"
                                 class="px-6 py-3 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-full hover:bg-pewter transition-colors duration-300 shadow-lg flex items-center gap-2 interactable magnetic">
@@ -488,13 +513,22 @@
                     </div>
                 </div>
 
-                <!-- Demo Item 4: Corporate / SaaS -->
+                <!-- Demo Item 4: Corporate / SaaS (Boost) -->
                 <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card"
                     data-category="corporate saas">
-                    <div class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6">
-                        <img src="imgs/boost.png"
-                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                            alt="Boost">
+                    <div
+                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container">
+                        <div class="slider-wrapper absolute inset-0 w-full h-full">
+                            <img src="imgs/boostpage.png"
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
+                                alt="Boost 1">
+                            <img src="imgs/boost2.png"
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                alt="Boost 2">
+                            <img src="imgs/boost3.png"
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                alt="Boost 3">
+                        </div>
                         <div class="demo-overlay absolute inset-0 flex items-center justify-center gap-4">
                             <a href="https://boostbytexnox.vercel.app/"
                                 class="px-6 py-3 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-full hover:bg-pewter transition-colors duration-300 shadow-lg flex items-center gap-2 interactable magnetic">
@@ -517,13 +551,19 @@
                     </div>
                 </div>
 
-                <!-- Demo Item 5: E-Commerce -->
+                <!-- Demo Item 5: E-Commerce (Belamon) -->
                 <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card"
                     data-category="ecommerce">
-                    <div class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6">
-                        <img src="imgs/belamon.png"
-                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                            alt="Belamon">
+                    <div
+                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container">
+                        <div class="slider-wrapper absolute inset-0 w-full h-full">
+                            <img src="imgs/belamon.png"
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
+                                alt="Belamon 1">
+                            <img src="imgs/belamon2.png"
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                alt="Belamon 2">
+                        </div>
                         <div class="demo-overlay absolute inset-0 flex items-center justify-center gap-4">
                             <a href="https://bellamonbytexnox.vercel.app/"
                                 class="px-6 py-3 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-full hover:bg-pewter transition-colors duration-300 shadow-lg flex items-center gap-2 interactable magnetic">
@@ -545,6 +585,43 @@
                             com</span>
                     </div>
                 </div>
+                <!-- Demo Item 6: Corporate (titenium) -->
+                <div class="demo-card group cursor-none opacity-0 scroll-anim interactable tilt-card"
+                    data-category="corporate">
+                    <div
+                        class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container">
+                        <div class="slider-wrapper absolute inset-0 w-full h-full">
+                            <img src="imgs/titenium.png"
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
+                                alt="Corporate 1">
+                            <img src="imgs/titenium2.png"
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                alt="Corporate 2">
+                            <img src="imgs/titenium3.png"
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
+                                alt="Corporate 3">
+                        </div>
+                        <div class="demo-overlay absolute inset-0 flex items-center justify-center gap-4">
+                            <a href="https://titaniumgym-mu.vercel.app/"
+                                class="px-6 py-3 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-full hover:bg-pewter transition-colors duration-300 shadow-lg flex items-center gap-2 interactable magnetic">
+                                <span>View Live</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center pr-2">
+                        <div class="flex items-center gap-3">
+                            <h3 class="font-serif text-2xl text-white group-hover:text-pewter transition">Titenium Gym</h3>
+                            <a href="https://titaniumgym-mu.vercel.app/"
+                                class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-gray hover:text-black hover:bg-white hover:border-white transition-all duration-300 interactable magnetic"
+                                title="View Project">
+                                <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
+                            </a>
+                        </div>
+                        <span
+                            class="text-xs font-bold font-sans text-gray-400 uppercase tracking-widest">Corporate</span>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -561,7 +638,7 @@
                             class="font-serif text-lg md:text-2xl text-gray-500 hover:text-white transition italic border-b border-gray-200 pb-1 interactable magnetic">
                             texnox.co@gmail.com
                         </a>
-                        <a href="tel:+15550123456"
+                        <a href="tel:+919825576263"
                             class="font-serif text-lg md:text-xl text-gray-400 hover:text-white transition interactable magnetic">
                             +91 9825576262
                         </a>
@@ -569,11 +646,11 @@
                 </div>
                 <div class="flex flex-col justify-end items-start md:items-end">
                     <nav class="space-y-4 text-left md:text-right mb-8 hidden md:block">
-                        <a href="index.html"
+                        <a href="#"
                             class="block text-gray-500 hover:text-white transition interactable magnetic">Home</a>
-                        <a href="demo.html"
+                        <a href="#"
                             class="block text-gray-500 hover:text-white transition interactable magnetic">Portfolio</a>
-                        <a href="aboutus.html"
+                        <a href="#"
                             class="block text-gray-500 hover:text-white transition interactable magnetic">Contact</a>
                     </nav>
                     <div class="flex gap-6">
@@ -792,6 +869,35 @@
             });
         });
 
+        // --- IMAGE SLIDER LOGIC ---
+        function initSliders() {
+            const containers = document.querySelectorAll('.slider-container');
+
+            containers.forEach(container => {
+                const images = container.querySelectorAll('img');
+                if (images.length <= 1) return;
+
+                let currentIndex = 0;
+                // Random start time to avoid robotic sync between cards
+                const randomDelay = Math.random() * 2000;
+
+                setTimeout(() => {
+                    setInterval(() => {
+                        // Fade out current
+                        images[currentIndex].classList.remove('opacity-100');
+                        images[currentIndex].classList.add('opacity-0');
+
+                        // Calculate next
+                        currentIndex = (currentIndex + 1) % images.length;
+
+                        // Fade in next
+                        images[currentIndex].classList.remove('opacity-0');
+                        images[currentIndex].classList.add('opacity-100');
+                    }, 3500); // 3.5 seconds per slide
+                }, randomDelay);
+            });
+        }
+
         function initAnimations() {
             // Hero Text Fade In
             gsap.to('.hero-anim', {
@@ -831,6 +937,9 @@
                 ease: "sine.inOut",
                 stagger: { amount: 3, from: "random" }
             });
+
+            // Initialize Sliders
+            initSliders();
         }
 
         // LOADER LOGIC
