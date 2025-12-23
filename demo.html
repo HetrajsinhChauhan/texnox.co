@@ -294,19 +294,19 @@
 
             <!-- Menu (Desktop) -->
             <div class="hidden md:flex items-center gap-10 font-sans text-sm font-medium tracking-wide opacity-90">
-                <a href="index.html"
+                <a href="#"
                     class="cipher-text nav-item-anim hover:opacity-100 hover:text-white transition-all opacity-0 interactable magnetic"
                     data-value="Home">Home</a>
-                <a href="demo.html"
+                <a href="#"
                     class="cipher-text nav-item-anim hover:opacity-100 hover:text-white transition-all opacity-0 interactable magnetic"
                     data-value="Demo">Demo</a>
-                <a href="plans.html"
+                <a href="#"
                     class="cipher-text nav-item-anim hover:opacity-100 hover:text-white transition-all opacity-0 interactable magnetic"
                     data-value="Pricing">Pricing</a>
-                <a href="aboutus.html"
+                <a href="#"
                     class="cipher-text nav-item-anim hover:opacity-100 hover:text-white transition-all opacity-0 interactable magnetic"
                     data-value="About us">About us</a>
-                <a href="Howwework.html"
+                <a href="#"
                     class="cipher-text nav-item-anim hover:opacity-100 hover:text-white transition-all opacity-0 interactable magnetic"
                     data-value="How We work">How We Work</a>
             </div>
@@ -333,12 +333,11 @@
     <div id="mobile-menu"
         class="fixed inset-0 bg-black/95 backdrop-blur-xl z-40 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300">
         <div class="flex flex-col gap-8 font-sans text-2xl font-light text-pewter tracking-wide text-center">
-            <a href="index.html" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">Home</a>
-            <a href="demo.html" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">About</a>
-            <a href="plans.html" class="hover:text-white hover:scale-110 transition-all"
-                onclick="toggleMenu()">Pricing</a>
-            <a href="aboutus.html" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">Works</a>
-            <a href="index.html#contact"
+            <a href="#" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">Home</a>
+            <a href="#" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">About</a>
+            <a href="#" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">Pricing</a>
+            <a href="#" class="hover:text-white hover:scale-110 transition-all" onclick="toggleMenu()">Works</a>
+            <a href="#contact"
                 class="px-8 py-4 mt-4 bg-pewter text-black text-lg font-bold rounded-full hover:bg-white transition shadow-lg"
                 onclick="toggleMenu()">
                 Get in Touch
@@ -353,7 +352,8 @@
         <!-- SEO Optimized Background Video -->
         <div class="absolute inset-0 w-full h-full overflow-hidden z-0">
             <video class="absolute inset-0 w-full h-full object-cover opacity-40 grayscale" autoplay muted loop
-                playsinline poster="https://images.pexels.com/videos/3130182/pictures/preview-0.jpg">
+                playsinline
+                poster="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070&auto=format&fit=crop">
                 <source src="https://videos.pexels.com/video-files/3130182/3130182-hd_1920_1080_30fps.mp4"
                     type="video/mp4">
             </video>
@@ -409,15 +409,15 @@
                         class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container w-full">
                         <!-- Image Slider Wrapper -->
                         <div class="slider-wrapper absolute inset-0 w-full h-full">
-                            <img src="imgs/sipso.png"
+                            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000&auto=format&fit=crop"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
                                 onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Sipso+Preview'"
                                 alt="Sipso Cafe 1">
-                            <img src="imgs/sipso2.png"
+                            <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=1000&auto=format&fit=crop"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
                                 onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Sipso+Detail'"
                                 alt="Sipso Cafe 2">
-                            <img src="imgs/sipso1.png"
+                            <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1000&auto=format&fit=crop"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
                                 onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Sipso+Menu'"
                                 alt="Sipso Cafe 3">
@@ -431,6 +431,11 @@
                             </a>
                         </div>
                     </div>
+                    <!-- Mobile Button -->
+                    <a href="https://texnoxsipso.vercel.app/"
+                        class="md:hidden block w-full py-3 mt-3 mb-2 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-sm text-center shadow-lg">
+                        View Live <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
                     <div class="flex justify-between items-center pr-2">
                         <div class="flex items-center gap-3">
                             <h3 class="font-serif text-2xl text-white group-hover:text-pewter transition">Sipso Cafe
@@ -451,15 +456,15 @@
                     <div
                         class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container w-full">
                         <div class="slider-wrapper absolute inset-0 w-full h-full">
-                            <img src="imgs/bloom&basket.png"
+                            <img src="https://images.unsplash.com/photo-1491223347913-687f185a5a9d?q=80&w=1000&auto=format&fit=crop"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
                                 onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Bloom+Main'"
                                 alt="Bloom 1">
-                            <img src="imgs/bloom2.png"
+                            <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=1000&auto=format&fit=crop"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
                                 onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Bloom+Detail'"
                                 alt="Bloom 2">
-                            <img src="imgs/bloom3.png"
+                            <img src="https://images.unsplash.com/photo-1595351298020-353915a94b80?q=80&w=1000&auto=format&fit=crop"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
                                 onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Bloom+Cart'"
                                 alt="Bloom 3">
@@ -472,6 +477,11 @@
                             </a>
                         </div>
                     </div>
+                    <!-- Mobile Button -->
+                    <a href="https://bloombytexnox.vercel.app/"
+                        class="md:hidden block w-full py-3 mt-3 mb-2 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-sm text-center shadow-lg">
+                        View Live <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
                     <div class="flex justify-between items-center pr-2">
                         <div class="flex items-center gap-3">
                             <h3 class="font-serif text-2xl text-white group-hover:text-pewter transition">Bloom & Basket
@@ -493,15 +503,15 @@
                     <div
                         class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container w-full">
                         <div class="slider-wrapper absolute inset-0 w-full h-full">
-                            <img src="imgs/Brewly.png"
+                            <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1000&auto=format&fit=crop"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
                                 onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Brewly+Main'"
                                 alt="Brewly 1">
-                            <img src="imgs/brewly2.png"
+                            <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=1000&auto=format&fit=crop"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
                                 onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Brewly+Cups'"
                                 alt="Brewly 2">
-                            <img src="imgs/brewly3.png"
+                            <img src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?q=80&w=1000&auto=format&fit=crop"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
                                 onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Brewly+Shop'"
                                 alt="Brewly 3">
@@ -514,6 +524,11 @@
                             </a>
                         </div>
                     </div>
+                    <!-- Mobile Button -->
+                    <a href="https://brewlybytexnox.vercel.app/"
+                        class="md:hidden block w-full py-3 mt-3 mb-2 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-sm text-center shadow-lg">
+                        View Live <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
                     <div class="flex justify-between items-center pr-2">
                         <div class="flex items-center gap-3">
                             <h3 class="font-serif text-2xl text-white group-hover:text-pewter transition">Brewly Cafe
@@ -534,15 +549,15 @@
                     <div
                         class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container w-full">
                         <div class="slider-wrapper absolute inset-0 w-full h-full">
-                            <img src="imgs/boostpage.png"
+                            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
                                 onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Boost+SaaS'"
                                 alt="Boost 1">
-                            <img src="imgs/boost2.png"
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
                                 onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Boost+Dashboard'"
                                 alt="Boost 2">
-                            <img src="imgs/boost3.png"
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
                                 onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Boost+Analytics'"
                                 alt="Boost 3">
@@ -555,6 +570,11 @@
                             </a>
                         </div>
                     </div>
+                    <!-- Mobile Button -->
+                    <a href="https://boostbytexnox.vercel.app/"
+                        class="md:hidden block w-full py-3 mt-3 mb-2 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-sm text-center shadow-lg">
+                        View Live <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
                     <div class="flex justify-between items-center pr-2">
                         <div class="flex items-center gap-3">
                             <h3 class="font-serif text-2xl text-white group-hover:text-pewter transition">Boost</h3>
@@ -575,11 +595,11 @@
                     <div
                         class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container w-full">
                         <div class="slider-wrapper absolute inset-0 w-full h-full">
-                            <img src="imgs/belamon.png"
+                            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
                                 onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Belamon+Store'"
                                 alt="Belamon 1">
-                            <img src="imgs/belamon2.png"
+                            <img src="https://images.unsplash.com/photo-1472851294608-415522f716a7?q=80&w=1000&auto=format&fit=crop"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
                                 onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Belamon+Products'"
                                 alt="Belamon 2">
@@ -592,6 +612,11 @@
                             </a>
                         </div>
                     </div>
+                    <!-- Mobile Button -->
+                    <a href="https://bellamonbytexnox.vercel.app/"
+                        class="md:hidden block w-full py-3 mt-3 mb-2 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-sm text-center shadow-lg">
+                        View Live <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
                     <div class="flex justify-between items-center pr-2">
                         <div class="flex items-center gap-3">
                             <h3 class="font-serif text-2xl text-white group-hover:text-pewter transition">Belamon</h3>
@@ -612,15 +637,15 @@
                     <div
                         class="demo-img-container relative overflow-hidden rounded-sm bg-black aspect-[4/3] mb-6 slider-container w-full">
                         <div class="slider-wrapper absolute inset-0 w-full h-full">
-                            <img src="imgs/titenium.png"
+                            <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?q=80&w=1000&auto=format&fit=crop"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 group-hover:scale-110"
                                 onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Titanium+Gym'"
                                 alt="Corporate 1">
-                            <img src="imgs/titenium2.png"
+                            <img src="https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=1000&auto=format&fit=crop"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
                                 onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Titanium+Inside'"
                                 alt="Corporate 2">
-                            <img src="imgs/titenium3.png"
+                            <img src="https://images.unsplash.com/photo-1574680096141-9c31f28f887e?q=80&w=1000&auto=format&fit=crop"
                                 class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 group-hover:scale-110"
                                 onerror="this.src='https://placehold.co/800x600/1a1a1a/white?text=Titanium+Equipment'"
                                 alt="Corporate 3">
@@ -633,6 +658,11 @@
                             </a>
                         </div>
                     </div>
+                    <!-- Mobile Button -->
+                    <a href="https://titaniumgym-mu.vercel.app/"
+                        class="md:hidden block w-full py-3 mt-3 mb-2 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-sm text-center shadow-lg">
+                        View Live <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
                     <div class="flex justify-between items-center pr-2">
                         <div class="flex items-center gap-3">
                             <h3 class="font-serif text-2xl text-white group-hover:text-pewter transition">Titenium Gym
@@ -932,6 +962,24 @@
                 }, randomDelay);
             });
         }
+
+        // --- MOBILE INTERACTION FIX ---
+        // Allows tapping the project image on mobile to navigate, since hover overlay isn't available
+        const demoImages = document.querySelectorAll('.demo-img-container');
+
+        demoImages.forEach(imgContainer => {
+            imgContainer.addEventListener('click', function (e) {
+                // Check if we are on mobile (using the same breakpoint as CSS)
+                if (window.innerWidth < 768) {
+                    // Find the link inside this container
+                    const link = this.querySelector('a');
+                    if (link) {
+                        // Navigate
+                        window.location.href = link.href;
+                    }
+                }
+            });
+        });
 
         function initAnimations() {
             // Hero Text Fade In
